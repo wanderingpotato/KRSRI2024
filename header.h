@@ -18,7 +18,7 @@
 #include <Wire.h>
 #include <I2Cdev.h>
 #include "MPU6050_6Axis_MotionApps20.h"
-VL53L0X sensor;
+
 // Servo Baru
 // #include <Servo.h>
 
@@ -50,6 +50,10 @@ using namespace ControlTableItem;
 #define STAY 0 
 #define MOVING 1
 #define ROTATING 2
+
+//Putar
+#define KaP -1
+#define KiP 1
 
 //Arah robot
 #define FRONT 0

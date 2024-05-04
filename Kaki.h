@@ -22,21 +22,21 @@ class Kaki{
 
     void langkah(vec3_t pointMaju, vec3_t pointMundur, int speed){
       // DEFAULT DERAJAT 10
-        if(this->letak == BELAKANG){
-          pointMaju = rotateMatrix(pointMaju, 10);
-          pointMundur = rotateMatrix(pointMundur, 10);
-        }
-        else if(this->letak == DEPAN){
-          pointMaju = rotateMatrix(pointMaju, -10);
-          pointMundur = rotateMatrix(pointMundur, -10);
-        } 
+        // if(this->letak == DEPAN){
+        //   pointMaju = rotateMatrix(pointMaju, 10);
+        //   pointMundur = rotateMatrix(pointMundur, 10);
+        // }
+        // else if(this->letak == BELAKANG){
+        //   pointMaju = rotateMatrix(pointMaju, -10);
+        //   pointMundur = rotateMatrix(pointMundur, -10);
+        // } 
 
         if(this->grup == GRUP1){
-          // pointMaju.x *= 0.5;
+          pointMaju.z*=this->pos;
           moveToPoint(pointMaju, speed);
         }
         else{
-          // pointMundur.x *= 0.5;
+          pointMundur.z*=this->pos;
           moveToPoint(pointMundur, speed);
         }
         delayMicroseconds(10);
@@ -44,29 +44,36 @@ class Kaki{
 
     void langkahPutar(vec3_t pointMaju, vec3_t pointMundur, int speed){ 
       // DEFAULT DERAJAT 15
-        if(this->letak == DEPAN){
-          pointMaju = rotateMatrix(pointMaju, 15 * this->pos);
-          pointMundur = rotateMatrix(pointMundur, 15 * this->pos);
-        }
-        else if(this->letak == BELAKANG){
-          pointMaju = rotateMatrix(pointMaju, -15 * this->pos);
-          pointMundur = rotateMatrix(pointMundur, -15 * this->pos);
-        } 
+        // if(this->letak == DEPAN){
+        //   pointMaju = rotateMatrix(pointMaju, 10);
+        //   pointMundur = rotateMatrix(pointMundur, 10);
+        // }
+        // else if(this->letak == BELAKANG){
+        //   pointMaju = rotateMatrix(pointMaju, -10);
+        //   pointMundur = rotateMatrix(pointMundur, -10);
+        // } 
 
         if(this->grup == GRUP1){
+          // pointMaju.z*=this->pos;
           moveToPoint(pointMaju, speed);
         }
         else{
+          // pointMundur.z*=this->pos
           moveToPoint(pointMundur, speed);
         }
         delayMicroseconds(10);
     }
 
+
+
     void moveToPoint(vec3_t target, int speed = 300){
         vec3_t deggs = InversKinematik(target);
-        dxl.setGoalPosition(coxaID,(deggs.x*this->pos)+180,UNIT_DEGREE);
+        // *this->pos
+        dxl.setGoalPosition(coxaID,(deggs.x)+180,UNIT_DEGREE);
         dxl.setGoalPosition(fermurID,(deggs.y*-1)+180,UNIT_DEGREE);
         dxl.setGoalPosition(thibiaID,(deggs.z*this->pos)+180,UNIT_DEGREE);
+        // Serial3.println(this->coxaID);
+        // Serial3.println(dxl.setGoalPosition(coxaID,(deggs.x*this->pos)+180,UNIT_DEGREE));
         // Serial.println(this->coxaID);
         // Serial.println((deggs.x*this->pos)+180);
         // Serial.println((deggs.y*-1)+180);

@@ -101,7 +101,7 @@ class KakiGroup{
       do{
         vec3_t tempMaju = stepsMaju.dequeue();
         vec3_t tempMundur = stepsMundur.dequeue();
-            
+        Serial.println("-------------------------------");
         LF.langkahPutar(tempMaju,tempMundur, speed);
         RF.langkahPutar(tempMaju,tempMundur, speed);
         LM.langkahPutar(tempMaju,tempMundur, speed);
@@ -140,8 +140,8 @@ class KakiGroup{
 
       vec3_t naik = tinggi + this->standPoint[tipeLangkah];
       
-      langkahPutar(trajectory(P1,naik,P4), trajectory(P4,this->standPoint[tipeLangkah],P1), speed, delayLangkah);
-      langkahPutar(trajectory(P4,this->standPoint[tipeLangkah],P1), trajectory(P1,naik,P4), speed, delayLangkah);
+      langkahPutar(trajectory(P4,naik,P1), trajectory(P1,this->standPoint[tipeLangkah],P4), speed, delayLangkah);
+      langkahPutar(trajectory(P1,this->standPoint[tipeLangkah],P4), trajectory(P4,naik,P1), speed, delayLangkah);
     }
 
     //Untuk keperluan testing StandPoint Baru

@@ -5,8 +5,9 @@ Robot KSR2024;
 
 void setup(){
     // ax12a.begin(BaudRate, DirectionPin, &Serial3); // inisialisasi AX12A
-    // Serial3.begin(1000000);
+    // Serial3.begin(9600);
     // Serial.begin(9600);
+    // Serial.println("test");
     // KSR2023.init();
     // delay(1000);
     //Untuk mulai dari state tertentu

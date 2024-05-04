@@ -1,28 +1,42 @@
 class SensorJarak {
   private:
     int infraPin;
-
+    VL53L0X sensor;
     
-    float *buffer;
-    int bufferSize = 5;
-    int bufferIndex;
+    // float *buffer;
+    // int bufferSize = 5;
+    // int bufferIndex;
   
   public:
     float jarak;
     
     SensorJarak(int infraPin) {
       
-      buffer = new float[bufferSize];
-      bufferIndex = 0;
+      // buffer = new float[bufferSize];
+      // bufferIndex = 0;
       jarak = 0;
-      
-      pinMode(infraPin, OUTPUT);
-      sensor.init();
+      this->infraPin=infraPin;
     }
+    void init(){
+      pinMode(infraPin, OUTPUT);
+      digitalWrite(infraPin, LOW);
+      delay(400);
+      digitalWrite(infraPin, HIGH);
+      delay(150);
+      if (!sensor.init())
+      {
+        Serial.print(infraPin);
+        Serial.println("Failed to detect and initialize sensor!");
+        // while (1) {}
+      }
+      sensor.setTimeout(500);
+      delay(100);
+      sensor.setAddress((uint8_t)infraPin);
+      sensor.startContinuous();
+    }
+    float bacaJarak() {
 
-    void bacaJarak() {
-      resetTrigger();
-      
+      return sensor.readRangeContinuousMillimeters();
       // float duration = pulseIn(echoPin, HIGH);
       // int d = duration * 0.034 / 2 * 10;
 
@@ -39,13 +53,5 @@ class SensorJarak {
       
       // average /= bufferSize + 1;
       // this->jarak = average;
-    }
-
-    void resetTrigger() {
-      digitalWrite(infraPin, LOW);
-    }
-
-    void highTrigger(){
-      digitalWrite(infraPin, HIGH);
     }
 };

@@ -11,58 +11,61 @@ class SensorJarakGroup {
 
   public:
     SensorJarakGroup() :
-      depan(44),
-      belakang(45),
-      KiD(47),
-      KaD(46),
-      KiB(48),
-      KaB(49)
+      depan(45),
+      belakang(44),
+      KiD(44),
+      KaD(47),
+      KiB(45),
+      KaB(48)
     {}
-
-    int jarakKiri() {
-      return kiri.jarak;
+    void init(){
+      depan.init();
+      belakang.init();
+      KiD.init();
+      KaD.init();
+      KiB.init();
+      KaB.init();
     }
+    // int jarakKiri() {
+    //   return kiri.jarak;
+    // }
     
-    int jarakKanan() {
-      return kanan.jarak;
-    }
+    // int jarakKanan() {
+    //   return kanan.jarak;
+    // }
 
-    int jarakDepan() {
-      return depan.jarak;
-    }
+    // int jarakDepan() {
+    //   return depan.jarak;
+    // }
 
-    int jarakBelakang() {
-      return belakang.jarak;
-    }
+    // int jarakBelakang() {
+    //   return belakang.jarak;
+    // }
 
-    void readAllJarak(){
-      depan.resetTrigger();
-      belakang.resetTrigger();
-      // kiri.resetTrigger();
-      // kanan.resetTrigger();
-      delayMicroseconds(2);
-      depan.highTrigger();
-      belakang.highTrigger();
-      kiri.highTrigger();
-      kanan.highTrigger();
-      delayMicroseconds(10);
-      depan.bacaJarak();
-      belakang.bacaJarak();
-      kiri.bacaJarak();
-      kanan.bacaJarak();
-    }
+    // void readAllJarak(){
+    //   depan.bacaJarak();
+    //   belakang.bacaJarak();
+    //   kiri.bacaJarak();
+    //   kanan.bacaJarak();
+    // }
     
     void printJarak() {
-      // Serial.print("Kiri: ");
-      // Serial.print(jarakKiri());
-      // Serial.print(", ");
-      // Serial.print("Kanan: ");
-      // Serial.print(jarakKanan());
+      Serial.print("Kiri Depan: ");
+      Serial.print(KiD.bacaJarak());
       Serial.print(", ");
-      Serial.print("Belakang: ");
-      Serial.print(jarakBelakang());
+      Serial.print("Kiri Bekakang: ");
+      Serial.print(KiB.bacaJarak());
+      Serial.print(", ");
+      Serial.print("Kanan Depan: ");
+      Serial.print(KaD.bacaJarak());
+      Serial.print(", ");
+      Serial.print("Kanan Depan: ");
+      Serial.print(KaB.bacaJarak());
       Serial.print(", ");
       Serial.print("Depan: ");
-      Serial.println(jarakDepan());
+      Serial.print(depan.bacaJarak());
+      Serial.print(", ");
+      Serial.print("Belakang: ");
+      Serial.println(belakang.bacaJarak());
     }
 };
