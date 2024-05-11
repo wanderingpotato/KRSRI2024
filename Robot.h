@@ -101,7 +101,7 @@ public:
     // for(int i = 1 ; i <= 5 ; i++) jarak.readAllJarak();// ADD BUFFER KE JARAK
 
     // kamera.init();
-    // kompas.init();
+    kompas.init();
     
     // sweeper.init();
     // capit.init();
@@ -111,7 +111,8 @@ public:
     // delay(100);
     while (1)
     {
-    jarak.printJarak();
+    // jarak.printJarak();
+    kompas.printCurrent();
     }
 
     // kaki.init();

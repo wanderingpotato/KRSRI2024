@@ -1,4 +1,4 @@
-#define INTERRUPT_PIN 16
+#define INTERRUPT_PIN 23
 
 // Sumber MPU6050_DMP6
 
