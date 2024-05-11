@@ -42,6 +42,37 @@ class Kaki{
         delayMicroseconds(10);
     }
 
+    void samping(vec3_t pointMaju, vec3_t pointMundur,vec3_t pointTMa, vec3_t pointTMu,int speed){
+      // DEFAULT DERAJAT 10
+        if(this->letak== BELAKANG){
+          pointMaju.z*=-1;
+          pointMundur.z*=-1;
+        }
+
+        
+        if(this->grup == GRUP1){
+          if(this->letak == TENGAH){
+            pointTMa.z*=this->pos;
+            moveToPoint(pointTMa, speed);
+          }else{
+            // pointMaju.z*=this->pos;
+            moveToPoint(pointMaju, speed);
+          }
+        }
+        else{
+          if(this->letak == TENGAH){
+            pointTMu.z*=this->pos;
+            moveToPoint(pointTMu, speed);
+          }else{
+            
+            // pointMundur.z*=this->pos;
+            moveToPoint(pointMundur, speed);
+          }
+        }
+        delayMicroseconds(10);
+    }
+
+
     void langkahPutar(vec3_t pointMaju, vec3_t pointMundur, int speed){ 
       // DEFAULT DERAJAT 15
         // if(this->letak == DEPAN){
@@ -58,7 +89,7 @@ class Kaki{
           moveToPoint(pointMaju, speed);
         }
         else{
-          // pointMundur.z*=this->pos
+          // pointMundur.z*=this->pos;
           moveToPoint(pointMundur, speed);
         }
         delayMicroseconds(10);
@@ -69,15 +100,16 @@ class Kaki{
     void moveToPoint(vec3_t target, int speed = 300){
         vec3_t deggs = InversKinematik(target);
         // *this->pos
+
         dxl.setGoalPosition(coxaID,(deggs.x)+180,UNIT_DEGREE);
         dxl.setGoalPosition(fermurID,(deggs.y*-1)+180,UNIT_DEGREE);
         dxl.setGoalPosition(thibiaID,(deggs.z*this->pos)+180,UNIT_DEGREE);
-        // Serial3.println(this->coxaID);
-        // Serial3.println(dxl.setGoalPosition(coxaID,(deggs.x*this->pos)+180,UNIT_DEGREE));
+
         // Serial.println(this->coxaID);
-        // Serial.println((deggs.x*this->pos)+180);
+        // Serial.println((deggs.x)+180);
         // Serial.println((deggs.y*-1)+180);
         // Serial.println((deggs.z*this->pos)+180);
+
         // ax12a.moveSpeed(coxaID,mapServo(deggs.x), speed);
         // ax12a.moveSpeed(fermurID,mapServo(deggs.y * this->pos * -1), speed);
         // ax12a.moveSpeed(thibiaID,mapServo(deggs.z * this->pos), speed);

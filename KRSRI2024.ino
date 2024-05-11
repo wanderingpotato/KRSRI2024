@@ -5,17 +5,18 @@ Robot KSR2024;
 
 void setup(){
     // ax12a.begin(BaudRate, DirectionPin, &Serial3); // inisialisasi AX12A
-    // Serial3.begin(9600);
-    // Serial.begin(9600);
-    // Serial.println("test");
+    Wire.begin();
+    Serial3.begin(100000);
+    Serial.begin(9600);
+    Serial.println("test");
     // KSR2023.init();
     // delay(1000);
     //Untuk mulai dari state tertentu
 //     KSR2023.initManualMode();
 //     KSR2023.state = 18;
-  DEBUG_SERIAL.begin(115200);
-  dxl.begin(57600);
-  dxl.setPortProtocolVersion(DXL_PROTOCOL_VERSION);
+  // DEBUG_SERIAL.begin(115200);
+  // dxl.begin(57600);
+  // dxl.setPortProtocolVersion(DXL_PROTOCOL_VERSION);
   KSR2024.init();
   // KSR2024.state = 18;
 }
@@ -50,7 +51,7 @@ void loop(){
 //         KSR2023.movingDirection = MUNDUR;
 //         KSR2023.derajatLangkah = 8;
 //         break; 
-//      }
+//      }Ctrl+Shift+F
 //      //ambil korban pertama
 //      case 4:{
 //         KSR2023.derajatLangkah = 10;
@@ -66,7 +67,7 @@ void loop(){
 //         break; 
 //      }
 //      //hadap depan
-//      case 6:{
+//      case 6:{3
 //         KSR2023.movingType = ROTATING;
 //         KSR2023.movingDirection = KANAN;
 //         KSR2023.derajatLangkah = 18; // direset kembali

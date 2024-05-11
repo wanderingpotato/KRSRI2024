@@ -14,7 +14,7 @@ class KakiGroup{
     vec3_t standPoint[nStandPoint] = {
           {80, -68, 0}, //Normal 0 - 90
           {80, -50, 0}, // 10-80
-          {0, -29, 35}, //15-75
+          {80, -70, 0}, //rendah 15-75
           {0, -25, 34}, //20-70
           {0,-20, 32}, //25-65
           {0,-18, 32}  //Tinggi 30 - 60
@@ -38,7 +38,8 @@ class KakiGroup{
       // RF = Kaki(10,11,12, KANAN, GRUP1, BELAKANG); // Aslinya belakang kiri LB
       // RM = Kaki(13,14,15, KANAN, GRUP2, TENGAH); // Aslinya tengah kiri LM 
       // RB = Kaki(16,17,18, KANAN, GRUP1, DEPAN); // Aslinya depan kiri LF
-
+// GRUP2
+// GRUP1
       /*Thn 2024*/
       LF = Kaki(16,17,18, KIRI, GRUP2, DEPAN); // Aslinya depan kanan RF
       LM = Kaki(13,14,15, KIRI, GRUP1, TENGAH); // Aslinya tengah kanan RM
@@ -101,7 +102,6 @@ class KakiGroup{
       do{
         vec3_t tempMaju = stepsMaju.dequeue();
         vec3_t tempMundur = stepsMundur.dequeue();
-        Serial.println("-------------------------------");
         LF.langkahPutar(tempMaju,tempMundur, speed);
         RF.langkahPutar(tempMaju,tempMundur, speed);
         LM.langkahPutar(tempMaju,tempMundur, speed);
@@ -111,7 +111,23 @@ class KakiGroup{
         delay(delayLangkah);
       }while(!stepsMaju.isEmpty() && !stepsMundur.isEmpty());
     }
-    
+
+    void Langkahnyamping(ArduinoQueue<vec3_t> stepsMaju, ArduinoQueue<vec3_t> stepsMundur, ArduinoQueue<vec3_t> stepsTMu,ArduinoQueue<vec3_t> stepsTMa,int speed, int delayLangkah){
+      do{
+        vec3_t tempMaju = stepsMaju.dequeue();
+        vec3_t tempMundur = stepsMundur.dequeue();
+        vec3_t tempTMa = stepsTMa.dequeue();
+        vec3_t tempTMu = stepsTMu.dequeue();
+
+        LF.samping(tempMaju,tempMundur,tempTMa,tempTMu, speed);
+        RF.samping(tempMaju,tempMundur,tempTMa,tempTMu, speed);
+        LM.samping(tempMaju,tempMundur,tempTMa,tempTMu, speed);
+        RM.samping(tempMaju,tempMundur,tempTMa,tempTMu, speed);
+        LB.samping(tempMaju,tempMundur,tempTMa,tempTMu, speed);
+        RB.samping(tempMaju,tempMundur,tempTMa,tempTMu, speed);
+        delay(delayLangkah);
+      }while(!stepsMaju.isEmpty() && !stepsMundur.isEmpty());
+    }
     void jalan(int dir, int tipeLangkah, float derajat, int height, int speed, int delayLangkah){
       vec3_t tinggi = this->tinggi[tipeLangkah]; // Mengatur ketinggian dari langkah
       //jika custom
@@ -134,14 +150,35 @@ class KakiGroup{
       //jika custom
       if(height > 0)
         tinggi = {0, -height, this->tinggi[tipeLangkah].z};
-
+          
       vec3_t P1 = rotateMatrix(this->standPoint[tipeLangkah], derajat * dir);
       vec3_t P4 = rotateMatrix(this->standPoint[tipeLangkah], (-derajat) * dir);
 
+      // Mengatur perputaran kaki saat bergerak, dapat mempercepat langkah bila lebih besar
       vec3_t naik = tinggi + this->standPoint[tipeLangkah];
       
       langkahPutar(trajectory(P4,naik,P1), trajectory(P1,this->standPoint[tipeLangkah],P4), speed, delayLangkah);
       langkahPutar(trajectory(P1,this->standPoint[tipeLangkah],P4), trajectory(P4,naik,P1), speed, delayLangkah);
+    }
+
+    void nyamping(int dir, int tipeLangkah, float derajat, int height, int speed, int delayLangkah){
+      vec3_t tinggi = this->tinggi[tipeLangkah]; // Mengatur ketinggian dari langkah
+      //jika custom
+      if(height > 0)
+        tinggi = {0, -height, this->tinggi[tipeLangkah].z};
+          
+      vec3_t P1 = rotateMatrix(this->standPoint[tipeLangkah], derajat * dir);
+      vec3_t P5 = this->standPoint[tipeLangkah];
+      P5.x-=15;
+      vec3_t P4 = rotateMatrix(this->standPoint[tipeLangkah], (-derajat) * dir);
+
+      // Mengatur perputaran kaki saat bergerak, dapat mempercepat langkah bila lebih besar
+      vec3_t naik = tinggi + this->standPoint[tipeLangkah];
+      
+      Langkahnyamping(trajectory(P4,naik,P1), trajectory(P1,this->standPoint[tipeLangkah],P4), trajectory(naik, this->standPoint[tipeLangkah], P5),trajectory(P5, this->standPoint[tipeLangkah], naik), speed, delayLangkah);
+      Langkahnyamping(trajectory(P1,this->standPoint[tipeLangkah],P4), trajectory(P4,naik,P1),trajectory(P5,this->standPoint[tipeLangkah],naik),trajectory(naik,this->standPoint[tipeLangkah],P5), speed, delayLangkah);
+      // Langkahnyamping(trajectory(P4,naik,P1), trajectory(P1,this->standPoint[tipeLangkah],P4), trajectory(this->standPoint[2], this->standPoint[2], this->standPoint[2]),trajectory(this->standPoint[2], this->standPoint[2], this->standPoint[2]), speed, delayLangkah);
+      // Langkahnyamping(trajectory(P1,this->standPoint[tipeLangkah],P4), trajectory(P4,naik,P1),trajectory(this->standPoint[2],this->standPoint[2],this->standPoint[2]),trajectory(this->standPoint[2],this->standPoint[2],this->standPoint[2]), speed, delayLangkah);
     }
 
     //Untuk keperluan testing StandPoint Baru

@@ -11,20 +11,36 @@ class SensorJarakGroup {
 
   public:
     SensorJarakGroup() :
-      depan(45),
-      belakang(44),
-      KiD(44),
-      KaD(47),
-      KiB(45),
-      KaB(48)
+      depan(41,01),
+      belakang(35,02),
+      KiD(47,03),
+      KaD(45,04),
+      KiB(49,05),
+      KaB(51,06)
     {}
     void init(){
-      depan.init();
-      belakang.init();
-      KiD.init();
-      KaD.init();
-      KiB.init();
-      KaB.init();
+      delay(100);
+      SetInitAll();
+      delay(100);
+      depan.setAddress();
+      delay(100);
+      belakang.setAddress();
+      delay(100);
+      KiD.setAddress();
+      delay(100);
+      KaD.setAddress();
+      delay(100);
+      KiB.setAddress();
+      delay(100);
+      KaB.setAddress();
+      delay(100);
+      
+      StartAll();
+
+      // SetHighAll();
+      // delay(100);
+      
+      
     }
     // int jarakKiri() {
     //   return kiri.jarak;
@@ -48,7 +64,22 @@ class SensorJarakGroup {
     //   kiri.bacaJarak();
     //   kanan.bacaJarak();
     // }
-    
+    void StartAll(){
+      depan.Start();
+      belakang.Start();
+      KiD.Start();
+      KaD.Start();
+      KiB.Start();
+      KaB.Start();
+    }
+    void SetInitAll(){
+      depan.init();
+      belakang.init();
+      KiD.init();
+      KaD.init();
+      KiB.init();
+      KaB.init();
+    }
     void printJarak() {
       Serial.print("Kiri Depan: ");
       Serial.print(KiD.bacaJarak());
@@ -59,7 +90,7 @@ class SensorJarakGroup {
       Serial.print("Kanan Depan: ");
       Serial.print(KaD.bacaJarak());
       Serial.print(", ");
-      Serial.print("Kanan Depan: ");
+      Serial.print("Kanan Belakang: ");
       Serial.print(KaB.bacaJarak());
       Serial.print(", ");
       Serial.print("Depan: ");
