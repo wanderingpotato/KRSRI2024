@@ -2,7 +2,8 @@ class Kamera
 {
 private:
     Pixy2 pixy;
-
+    int m_index;
+    
 public:
     Kamera() {}
 
@@ -12,15 +13,36 @@ public:
         pixy.init();
     }
 
+    void getIndex(){
+      // if(pixy.ccc.numBlocks==1){
+      //   return pixy.ccc.blocks[0].m_index;
+      // }else{
+        int index=0;
+        pixy.ccc.getBlocks();
+        if (pixy.ccc.blocks)
+        {
+          for(int i=0;i<pixy.ccc.numBlocks;i++){
+          // ||(pixy.ccc.blocks[i].m_width<pixy.ccc.blocks[i+1].m_width)||
+            if((pixy.ccc.blocks[index].m_height<pixy.ccc.blocks[i].m_height)){
+              index=i;
+            }
+          }
+        }
+        m_index=pixy.ccc.blocks[index].m_index;;
+      // }
+      
+    }
     int getKorban()
     {
         pixy.ccc.getBlocks();
-
-        if (pixy.ccc.numBlocks)
+        if (pixy.ccc.blocks)
         {
             for (int i = 0; i < pixy.ccc.numBlocks; i++)
             {
-                return i;
+                if(pixy.ccc.blocks[i].m_index==m_index){
+                  return i;
+                }
+                
             }
         }
 
@@ -29,57 +51,103 @@ public:
 
     int getWidth()
     {
-        int i = getKorban();
-
-        if (i == -1)
-            return -1;
-
-        return pixy.ccc.blocks[i].m_width;
+        pixy.ccc.getBlocks();
+        if (pixy.ccc.blocks)
+        {
+            for (int i = 0; i < pixy.ccc.numBlocks; i++)
+            {
+                if(pixy.ccc.blocks[i].m_index==m_index){
+                  return pixy.ccc.blocks[i].m_width;
+                }
+                
+            }
+        }
     }
 
     int getHeight()
     {
-        int i = getKorban();
-
-        if (i == -1)
-            return -1;
-
-        return pixy.ccc.blocks[i].m_height;
+        pixy.ccc.getBlocks();
+        if (pixy.ccc.blocks)
+        {
+            for (int i = 0; i < pixy.ccc.numBlocks; i++)
+            {
+                if(pixy.ccc.blocks[i].m_index==m_index){
+                  return pixy.ccc.blocks[i].m_height;
+                }
+                
+            }
+        }
     }
 
     int getX()
     {
-        int i = getKorban();
-
-        if (i == -1)
-            return -1;
-
-        return pixy.ccc.blocks[i].m_x;
+        pixy.ccc.getBlocks();
+        if (pixy.ccc.blocks)
+        {
+            for (int i = 0; i < pixy.ccc.numBlocks; i++)
+            {
+                if(pixy.ccc.blocks[i].m_index==m_index){
+                  return pixy.ccc.blocks[i].m_x;
+                }
+                
+            }
+        }
     }
 
     int getY()
     {
-        int i = getKorban();
-
-        if (i == -1)
-            return -1;
-
-        return pixy.ccc.blocks[i].m_y;
+        pixy.ccc.getBlocks();
+        if (pixy.ccc.blocks)
+        {
+            for (int i = 0; i < pixy.ccc.numBlocks; i++)
+            {
+                if(pixy.ccc.blocks[i].m_index==m_index){
+                  return pixy.ccc.blocks[i].m_y;
+                }
+                
+            }
+        }
     }
 
     void kameraPrintLocation()
     {
-        Serial.print("X : ");
-        Serial.print(getX());
-        Serial.print(" Y : ");
-        Serial.print(getY());
-        Serial.print(" W : ");
+        Serial3.print("X : ");
+        Serial3.print(getX());
+        Serial3.print(" Y : ");
+        Serial3.print(getY());
+        Serial3.print(" W : ");
         int width = getWidth();
         int height = getHeight();
-        Serial.print(width);
-        Serial.print(" H : ");
-        Serial.print(height);
-        Serial.print(" W-H : ");
-        Serial.println(width - height);
+        Serial3.print(width);
+        Serial3.print(" H : ");
+        Serial3.print(height);
+        Serial3.print(" W-H : ");
+        Serial3.println(width - height);
     }
+
+    void test(){
+      int i;
+        pixy.ccc.getBlocks();
+  
+        // If there are detect blocks, print them!
+        if (pixy.ccc.numBlocks)
+        {
+          Serial3.print("Detected ");
+          Serial3.println(pixy.ccc.numBlocks);
+          for (i=0; i<pixy.ccc.numBlocks; i++)
+          {
+            Serial3.print("  block ");
+            Serial3.print(i);
+            Serial3.print(": Index :");
+            Serial3.print(pixy.ccc.blocks[i].m_index);
+            Serial3.print(",X : ");
+            Serial3.print(pixy.ccc.blocks[i].m_x);
+            Serial3.print(",WITDH : ");
+            Serial3.print(pixy.ccc.blocks[i].m_width);
+            Serial3.print(",HEIGHT : ");
+            Serial3.print(pixy.ccc.blocks[i].m_height);
+          }
+        }  
+    }
+
 };

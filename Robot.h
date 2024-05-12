@@ -19,7 +19,7 @@ private:
 public:
   Capit capit;
   // parameter robot
-  int tipeLangkah = SEDANG_10;     // jenis langkah
+  int tipeLangkah = NORMAL;     // jenis langkah
   float derajatLangkah = 20;       // besar langkah kaki saat jalan
   float derajatLangkahSetPos = 10; // besar langkah kaki saat mengoreksi diri
   int height = DEFAULT;            // tinggi langkah kaki, sebaiknya tidak diubah
@@ -95,28 +95,34 @@ public:
 
   void init()
   {
-    // kaki = KakiGroup();
+    kaki = KakiGroup();
     jarak = SensorJarakGroup();
 
-    // for(int i = 1 ; i <= 5 ; i++) jarak.readAllJarak();// ADD BUFFER KE JARAK
+    // // for(int i = 1 ; i <= 5 ; i++) jarak.readAllJarak();// ADD BUFFER KE JARAK
 
     // kamera.init();
-    kompas.init();
+    // kompas.init();
     
-    // sweeper.init();
-    // capit.init();
-    // Serial.print("ffak");
+    // // sweeper.init();
+    capit.init();
+    // // Serial.print("ffak");
     jarak.init();
-    // Serial.print("ffak");
-    // delay(100);
+    // // Serial.print("ffak");
+    // // delay(100);
+    
+    
+    kaki.init();
+    delay(100);
+    kaki.berdiri(tipeLangkah);
     while (1)
     {
-    // jarak.printJarak();
-    kompas.printCurrent();
+    jarak.printJarak();
+    
+    // // kompas.printCurrent();
+    // kamera.kameraPrintLocation();
     }
-
-    // kaki.init();
-    // kaki.berdiri(tipeLangkah);
+    // delay(1000);
+    // getKorban();
     // delay(3000);
     // capit.turunLengan();
     // capit.bukaCapit();
@@ -349,7 +355,7 @@ public:
   }
   void getKorban()
   {
-    getKorban(DEFAULT, this->derajatLangkah, this->tipeLangkah, this->speed, this->targetSizeKorban);
+    getKorban(DEFAULT, 10, this->tipeLangkah, this->speed, this->targetSizeKorban);
     this->isHoldingKorban = true;
   }
 
@@ -363,12 +369,12 @@ public:
     X = Y = W = H = 0;
     berdiri(tipeLangkah);
     delay(200);
-
-    capit.turunLengan();
-    capit.bukaCapit();
+    kamera.getIndex();
+    // capit.turunLengan();
+    // capit.bukaCapit();
     int step = 0;
     int end = 4;
-    int arah = KIRI;
+    int arah = KiP;
     while (kamera.getX() == -1)
     {
       if (step == end)
@@ -377,9 +383,9 @@ public:
         {
           step = 8;
         }
-        arah = (arah == KIRI) ? KANAN : KIRI;
+        // arah = (arah == KiP) ? KaP : KiP;
       }
-      rotate(arah, DEFAULT, 1, 11, this->tipeLangkah, this->speed, this->delayLangkah);
+      // rotate(arah, DEFAULT, 1, 7, this->tipeLangkah, this->speed, this->delayLangkah);
       // readUltrasonic();
       step++;
     }
@@ -389,26 +395,30 @@ public:
       X = kamera.getX();
       Y = kamera.getY();
 
-      if (X >= 0 && X <= 125)
+      // Serial3.print(X);
+      // Serial3.print(" ");
+      // Serial3.print(Y);
+      // Serial3.println(" ");
+      if (X >= 175)
       {
-        rotate(KANAN, height, 1, 3, tipeLangkah, speed, this->delayLangkah);
+        rotate(KaP, height, 1, 5, tipeLangkah, speed, this->delayLangkah);
         // readUltrasonic();
       }
-      else if (X >= 175)
+      else if (X >= 0 && X <= 125)
       {
-        rotate(KIRI, height, 1, 3, tipeLangkah, speed, this->delayLangkah);
+        rotate(KiP, height, 1, 5, tipeLangkah, speed, this->delayLangkah);
         // readUltrasonic();
       }
       else
       {
         move(MAJU, height, derajat, tipeLangkah, speed, this->delayLangkah);
-        // readUltrasonic();
+        // readUltrasonic();kzc
       }
 
       W = kamera.getWidth();
       H = kamera.getHeight();
 
-      kamera.kameraPrintLocation();
+      // kamera.kameraPrintLocation();
 
       if (W - H >= targetSizeKorban)
       {
@@ -431,16 +441,16 @@ public:
     }
 
     delay(500);
-    capit.tutupCapit();
+    // capit.tutupCapit();
     berdiri(tipeLangkah);
-    capit.naikLenganDikit();
+    // capit.naikLenganDikit();
     for (int i = 0; i < 2; i++)
     {
       move(MUNDUR, height, derajat, tipeLangkah, speed, this->delayLangkah);
       // readUltrasonic();
     }
     delay(50);
-    capit.naikLenganLanjutan();
+    // capit.naikLenganLanjutan();
     state++;
   }
   void letakanKorban()

@@ -24,8 +24,8 @@ class SensorJarak {
       
       if (!sensor.init())
       {
-        Serial.print(this->infraPin);
-        Serial.println("Failed to detect and initialize sensor!");
+        Serial3.print(this->infraPin);
+        Serial3.println("Failed to detect and initialize sensor!");
         // while (1) {}
       }
       delay(150);

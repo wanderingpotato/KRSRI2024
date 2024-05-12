@@ -81,22 +81,22 @@ class SensorJarakGroup {
       KaB.init();
     }
     void printJarak() {
-      Serial.print("Kiri Depan: ");
-      Serial.print(KiD.bacaJarak());
-      Serial.print(", ");
-      Serial.print("Kiri Bekakang: ");
-      Serial.print(KiB.bacaJarak());
-      Serial.print(", ");
-      Serial.print("Kanan Depan: ");
-      Serial.print(KaD.bacaJarak());
-      Serial.print(", ");
-      Serial.print("Kanan Belakang: ");
-      Serial.print(KaB.bacaJarak());
-      Serial.print(", ");
-      Serial.print("Depan: ");
-      Serial.print(depan.bacaJarak());
-      Serial.print(", ");
-      Serial.print("Belakang: ");
-      Serial.println(belakang.bacaJarak());
+      Serial3.print("Kiri Depan: ");
+      Serial3.print(KiD.bacaJarak());
+      Serial3.print(", ");
+      Serial3.print("Kiri Bekakang: ");
+      Serial3.print(KiB.bacaJarak());
+      Serial3.print(", ");
+      Serial3.print("Kanan Depan: ");
+      Serial3.print(KaD.bacaJarak());
+      Serial3.print(", ");
+      Serial3.print("Kanan Belakang: ");
+      Serial3.print(KaB.bacaJarak());
+      Serial3.print(", ");
+      Serial3.print("Depan: ");
+      Serial3.print(depan.bacaJarak());
+      Serial3.print(", ");
+      Serial3.print("Belakang: ");
+      Serial3.println(belakang.bacaJarak());
     }
 };

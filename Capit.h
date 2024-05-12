@@ -19,8 +19,8 @@ class Capit{
       delay(10);
       // Bagian atas untuk attach servo ke pin
 
-      lengan.write(90);
-      capitan.write(0);
+      lengan.write(0);
+      capitan.write(90);
       delay(200);
 
       // Bagian atas untuk mengset langsung servo ke posisi awal
