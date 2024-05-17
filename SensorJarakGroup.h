@@ -42,28 +42,38 @@ class SensorJarakGroup {
       
       
     }
-    // int jarakKiri() {
-    //   return kiri.jarak;
-    // }
+    int jarakKanan() {
+      if(KaD.bacaJarak()>KaB.bacaJarak()){
+        return KaD.bacaJarak();
+      }else{
+        return KaB.bacaJarak();
+      }
+    }
     
-    // int jarakKanan() {
-    //   return kanan.jarak;
-    // }
+    int jarakKiri() {
+      if(KiD.bacaJarak()>KiB.bacaJarak()){
+        return KiD.bacaJarak();
+      }else{
+        return KiB.bacaJarak();
+      }
+    }
 
-    // int jarakDepan() {
-    //   return depan.jarak;
-    // }
+    int jarakDepan() {
+      return depan.bacaJarak();
+    }
 
-    // int jarakBelakang() {
-    //   return belakang.jarak;
-    // }
+    int jarakBelakang() {
+      return belakang.bacaJarak();
+    }
 
-    // void readAllJarak(){
-    //   depan.bacaJarak();
-    //   belakang.bacaJarak();
-    //   kiri.bacaJarak();
-    //   kanan.bacaJarak();
-    // }
+    void readAllJarak(){
+      depan.bacaJarak();
+      belakang.bacaJarak();
+      KaD.bacaJarak();
+      KaB.bacaJarak();
+      KiD.bacaJarak();
+      KiB.bacaJarak();
+    }
     void StartAll(){
       depan.Start();
       belakang.Start();

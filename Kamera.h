@@ -23,12 +23,13 @@ public:
         {
           for(int i=0;i<pixy.ccc.numBlocks;i++){
           // ||(pixy.ccc.blocks[i].m_width<pixy.ccc.blocks[i+1].m_width)||
-            if((pixy.ccc.blocks[index].m_height<pixy.ccc.blocks[i].m_height)){
+            if((pixy.ccc.blocks[index].m_width<pixy.ccc.blocks[i].m_width)){
               index=i;
             }
           }
         }
         m_index=pixy.ccc.blocks[index].m_index;;
+        Serial3.print(m_index);
       // }
       
     }

@@ -19,8 +19,8 @@ class Capit{
       delay(10);
       // Bagian atas untuk attach servo ke pin
 
-      lengan.write(0);
-      capitan.write(90);
+      lengan.write(90);
+      capitan.write(0);
       delay(200);
 
       // Bagian atas untuk mengset langsung servo ke posisi awal
@@ -33,7 +33,7 @@ class Capit{
     }
 
     void bukaCapit(){
-      capitan.write(60);
+      capitan.write(30);
       delay(200);
       // Membuka Capit dengan sudut 60 derajat
     }
@@ -62,7 +62,7 @@ class Capit{
     }
 
     void turunLengan(){
-      for(int pos = 90 ; pos >= 0 ; pos -= 5){
+      for(int pos = 90 ; pos >= 20 ; pos -= 5){
           lengan.write(pos);
           delay(10);
       }

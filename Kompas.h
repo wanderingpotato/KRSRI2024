@@ -52,16 +52,16 @@ class Kompas{
                 compass.CalibrateGyro(6);
                 compass.PrintActiveOffsets();
 
-                Serial.println(F("Enabling DMP..."));
+                Serial3.println(F("Enabling DMP..."));
                 compass.setDMPEnabled(true);
 
-                Serial.print(F("Enabling interrupt detection (Arduino external interrupt "));
-                Serial.print(digitalPinToInterrupt(INTERRUPT_PIN));
-                Serial.println(F(")..."));
+                Serial3.print(F("Enabling interrupt detection (Arduino external interrupt "));
+                Serial3.print(digitalPinToInterrupt(INTERRUPT_PIN));
+                Serial3.println(F(")..."));
                 attachInterrupt(digitalPinToInterrupt(INTERRUPT_PIN), dmpDataReady, RISING);
                 mpuIntStatus = compass.getIntStatus();
 
-                Serial.println(F("DMP ready! Waiting for first interrupt..."));
+                Serial3.println(F("DMP ready! Waiting for first interrupt..."));
                 dmpReady = true;
 
                 // get expected DMP packet size for later comparison
@@ -72,17 +72,17 @@ class Kompas{
                 // 1 = initial memory load failed
                 // 2 = DMP configuration updates failed
                 // (if it's going to break, usually the code will be 1)
-                Serial.print(F("DMP Initialization failed (code "));
-                Serial.print(devStatus);
-                Serial.println(F(")"));
+                Serial3.print(F("DMP Initialization failed (code "));
+                Serial3.print(devStatus);
+                Serial3.println(F(")"));
             }
 
         }
 
         bool testConnection(){
           // Test koneksi dari compass
-          Serial.println("Testing device connections...");
-          Serial.println(compass.testConnection() ? "MPU6050 connection successful" : "MPU6050 connection failed");
+          Serial3.println("Testing device connections...");
+          Serial3.println(compass.testConnection() ? "MPU6050 connection successful" : "MPU6050 connection failed");
 
           return compass.testConnection();
         }
@@ -94,14 +94,14 @@ class Kompas{
           compass.dmpGetQuaternion(&q, fifoBuffer);
           compass.dmpGetGravity(&gravity, &q);
           compass.dmpGetYawPitchRoll(ypr, &q, &gravity);
-          Serial.print("Yaw: ");
-          Serial.print(ypr[0] * 180/M_PI + 180);
-          Serial.print(",");
-          Serial.print("Pitch: ");
-          Serial.print(ypr[1]  * 180/M_PI);
-          Serial.print(",");
-          Serial.print("Roll: ");
-          Serial.println(ypr[2] * 180/M_PI);
+          Serial3.print("Yaw: ");
+          Serial3.print(ypr[0] * 180/M_PI + 180);
+          Serial3.print(",");
+          Serial3.print("Pitch: ");
+          Serial3.print(ypr[1]  * 180/M_PI);
+          Serial3.print(",");
+          Serial3.print("Roll: ");
+          Serial3.println(ypr[2] * 180/M_PI);
         }
 
         vec3_t getCurrent(){

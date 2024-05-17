@@ -8,10 +8,8 @@ class SensorJarak {
     // int bufferIndex;
   
   public:
-    float jarak;
     
     SensorJarak(int infraPin,uint8_t address) {
-      jarak = 0;
       this->address= address;
       this->infraPin=infraPin;
 
@@ -45,7 +43,12 @@ class SensorJarak {
       sensor.startContinuous();
     }
     float bacaJarak() {
-      return sensor.readRangeContinuousMillimeters();
+      float test=sensor.readRangeContinuousMillimeters();
+      if(test>2000){
+        return 0;
+      }else{
+        return test;
+      }
     }
     void setLow(){
       digitalWrite(this->infraPin, LOW);

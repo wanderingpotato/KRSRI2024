@@ -29,9 +29,9 @@ public:
   int movingDirection = STAY;      // arah gerakan MAJU-MUNDUR-KIRI-KANAN
   float error = 10.0;              // toleransi selisih error yaw Real robot dengan direction robot
   int speed = 300;                 // kecepatan motor
-  int delayLangkah = 100;          // delay antar langkah
+  int delayLangkah = 10;          // delay antar langkah
   bool isHoldingKorban = false;    // Apakah robot sedang memegang korban atau tidak
-  int targetSizeKorban = 85;
+  int targetSizeKorban = 73;
   int kondisiTargetJarakMin[4] = {0, 0, 0, 0}; // kondisi target dari ke-4 jarak, jika 0 abaikan
   int kondisiTargetJarakMax[4] = {0, 0, 0, 0}; // jarak sebenarnya lebih kecil daripada kondisi
   int kondisiTargetRollMin = 0;                // kondisi target dari roll, jika 0 abaikan
@@ -49,92 +49,72 @@ public:
 
   void printState()
   {
-    Serial.print("S: ");
-    Serial.print(state);
-    Serial.print(" TL: ");
-    Serial.print(tipeLangkah);
-    Serial.print(" DL: ");
-    Serial.print(derajatLangkah);
-    Serial.print(" H: ");
-    Serial.print(height);
-    Serial.print(" Arah: ");
-    Serial.print(direction);
-    Serial.print(" Offset: ");
-    Serial.print(offsetDirection);
-    Serial.print(" MT: ");
-    Serial.print(movingType);
-    Serial.print(" MD: ");
-    Serial.print(movingDirection);
-    Serial.print(" E: ");
-    Serial.print(error);
-    Serial.print(" Speed: ");
-    Serial.print(speed);
-    Serial.print(" Delay: ");
-    Serial.print(delayLangkah);
-    Serial.print(" korban: ");
-    Serial.print(isHoldingKorban);
-    Serial.print(" MinU: ");
+    Serial3.print("S: ");
+    Serial3.print(state);
+    Serial3.print(" TL: ");
+    Serial3.print(tipeLangkah);
+    Serial3.print(" DL: ");
+    Serial3.print(derajatLangkah);
+    Serial3.print(" H: ");
+    Serial3.print(height);
+    Serial3.print(" Arah: ");
+    Serial3.print(direction);
+    Serial3.print(" Offset: ");
+    Serial3.print(offsetDirection);
+    Serial3.print(" MT: ");
+    Serial3.print(movingType);
+    Serial3.print(" MD: ");
+    Serial3.print(movingDirection);
+    Serial3.print(" E: ");
+    Serial3.print(error);
+    Serial3.print(" Speed: ");
+    Serial3.print(speed);
+    Serial3.print(" Delay: ");
+    Serial3.print(delayLangkah);
+    Serial3.print(" korban: ");
+    Serial3.print(isHoldingKorban);
+    Serial3.print(" MinU: ");
     for (int i = 0; i < 4; i++)
     {
-      Serial.print(kondisiTargetJarakMin[i]);
-      Serial.print(',');
+      Serial3.print(kondisiTargetJarakMin[i]);
+      Serial3.print(',');
     }
-    Serial.print(" MaxU:  ");
+    Serial3.print(" MaxU:  ");
     for (int i = 0; i < 4; i++)
     {
-      Serial.print(kondisiTargetJarakMax[i]);
-      Serial.print(',');
+      Serial3.print(kondisiTargetJarakMax[i]);
+      Serial3.print(',');
     }
-    Serial.print(" MinR: ");
-    Serial.print(kondisiTargetRollMin);
-    Serial.print(" MaxR: ");
-    Serial.println(kondisiTargetRollMax);
+    Serial3.print(" MinR: ");
+    Serial3.print(kondisiTargetRollMin);
+    Serial3.print(" MaxR: ");
+    Serial3.println(kondisiTargetRollMax);
     cetakYaw();
-    Serial.println("------------------------------");
+    Serial3.println("------------------------------");
   }
 
   void init()
   {
     kaki = KakiGroup();
     jarak = SensorJarakGroup();
-
-    // // for(int i = 1 ; i <= 5 ; i++) jarak.readAllJarak();// ADD BUFFER KE JARAK
-
-    // kamera.init();
-    // kompas.init();
-    
-    // // sweeper.init();
+    kamera.init();
+    kompas.init();
     capit.init();
-    // // Serial.print("ffak");
     jarak.init();
-    // // Serial.print("ffak");
-    // // delay(100);
-    
-    
     kaki.init();
+    
     delay(100);
     kaki.berdiri(tipeLangkah);
-    while (1)
-    {
-    jarak.printJarak();
-    
-    // // kompas.printCurrent();
-    // kamera.kameraPrintLocation();
-    }
-    // delay(1000);
-    // getKorban();
-    // delay(3000);
-    // capit.turunLengan();
-    // capit.bukaCapit();
-    // delay(100);
-    // capit.tutupCapit();
-    // delay(100);
-    // capit.naikLengan();
-    delay(1000);
+    // while(1){
+    //   kamera.test();
+    // }
     // for(int i=0;i<10;i++){
     //  move(MAJU, DEFAULT, this->derajatLangkah, this->tipeLangkah, this->speed, this->delayLangkah);
     //  rotate(KaP, DEFAULT, 5, 20, this->tipeLangkah, this->speed, this->delayLangkah);
     //  kepiting(MAJU, DEFAULT, 20, this->tipeLangkah, this->speed, this->delayLangkah);
+    // }
+    // while(1){
+    //   move(MAJU, DEFAULT, this->derajatLangkah, this->tipeLangkah, this->speed, this->delayLangkah);
     // }
   }
 
@@ -237,11 +217,6 @@ public:
     for (int i = 0; i < step; i++)
     {
       kaki.putar(action, tipeLangkah, derajat, height, speed, delayLangkah);
-      // readUltrasonic();
-      //     Serial.print("Rotasi ");
-      //     Serial.print(i);
-      //     Serial.print(" : ");
-      //     printCurrentYPR();
     }
   }
 
@@ -251,67 +226,67 @@ public:
     kaki.nyamping(action, tipeLangkah, derajat, height, speed, delayLangkah);
   }
   // Arahkan robot ke depan, dan inisialisai value Yaw
-  //  void checkPosition(){
-  //    // kalo depan kosong -> (jarak jauh) langsung skip sekuens ini
-  //    // kalo kanan kosong -> putar kanan
-  //    // kalo kiri kosong -> putar kiri
-  //    // kalo belakang kosong -> putar balik dari kiri / kanan sama aja
+   void checkPosition(){
+     // kalo depan kosong -> (jarak jauh) langsung skip sekuens ini
+     // kalo kanan kosong -> putar kanan
+     // kalo kiri kosong -> putar kiri
+     // kalo belakang kosong -> putar balik dari kiri / kanan sama aja
 
-  //   if(jarak.jarakBelakang() >= 350){ // Berarti lagi ngadep belakang
-  //     yaw[BACK] = getYaw();
+    if(jarak.jarakBelakang() >= 280){ // Berarti lagi ngadep belakang
+      yaw[BACK] = getYaw();
 
-  //     yaw[FRONT] = yaw[BACK] + 180;
-  //     yaw[RIGHT] = yaw[BACK] - 90;
-  //     yaw[LEFT] = yaw[BACK] + 90;
-  //     rotate(KIRI, DEFAULT, 5, 11, this->tipeLangkah, this->speed, this->delayLangkah);
-  //     rotate(KIRI, DEFAULT, 5, 11, this->tipeLangkah, this->speed, this->delayLangkah);
-  //     setPos();
-  //   }
-  //   else if(jarak.jarakKiri() >= 350){ // Berarti lagi ngadep kanan
-  //     yaw[RIGHT] = getYaw();
+      yaw[FRONT] = yaw[BACK] + 180;
+      yaw[RIGHT] = yaw[BACK] - 90;
+      yaw[LEFT] = yaw[BACK] + 90;
+      rotate(KiP, DEFAULT, 5, 11, this->tipeLangkah, this->speed, this->delayLangkah);
+      rotate(KiP, DEFAULT, 5, 11, this->tipeLangkah, this->speed, this->delayLangkah);
+      setPos();
+    }
+    else if(jarak.jarakKiri() >= 280){ // Berarti lagi ngadep kanan
+      yaw[RIGHT] = getYaw();
 
-  //     yaw[LEFT] = yaw[RIGHT] + 180;
-  //     yaw[FRONT] = yaw[RIGHT] - 90;
-  //     yaw[BACK] = yaw[RIGHT] + 90;
+      yaw[LEFT] = yaw[RIGHT] + 180;
+      yaw[FRONT] = yaw[RIGHT] - 90;
+      yaw[BACK] = yaw[RIGHT] + 90;
 
-  //     rotate(KIRI, DEFAULT, 5, 11, this->tipeLangkah, this->speed, this->delayLangkah);
-  //     setPos();
-  //   }
-  //   else if(jarak.jarakKanan() >= 350){ // Berarti lagi ngadep kiri
-  //     yaw[LEFT] = getYaw();
+      rotate(KiP, DEFAULT, 5, 11, this->tipeLangkah, this->speed, this->delayLangkah);
+      setPos();
+    }
+    else if(jarak.jarakKanan() >= 280){ // Berarti lagi ngadep kiri
+      yaw[LEFT] = getYaw();
 
-  //     yaw[RIGHT] = yaw[LEFT] + 180;
-  //     yaw[BACK] = yaw[LEFT] - 90;
-  //     yaw[FRONT] = yaw[LEFT] + 90;
+      yaw[RIGHT] = yaw[LEFT] + 180;
+      yaw[BACK] = yaw[LEFT] - 90;
+      yaw[FRONT] = yaw[LEFT] + 90;
 
-  //     rotate(KANAN, DEFAULT, 5, 11, this->tipeLangkah, this->speed, this->delayLangkah);
-  //     setPos();
-  //   }
-  //   else if(jarak.jarakDepan() >= 350){ // Ngadep depan
-  //     yaw[FRONT] = getYaw();
+      rotate(KaP, DEFAULT, 5, 11, this->tipeLangkah, this->speed, this->delayLangkah);
+      setPos();
+    }
+    else if(jarak.jarakDepan() >= 280){ // Ngadep depan
+      yaw[FRONT] = getYaw();
 
-  //     yaw[BACK] = yaw[FRONT] + 180;
-  //     yaw[LEFT] = yaw[FRONT] - 90;
-  //     yaw[RIGHT] = yaw[FRONT] + 90;
-  //   }
-  //   state++;
-  // }
+      yaw[BACK] = yaw[FRONT] + 180;
+      yaw[LEFT] = yaw[FRONT] - 90;
+      yaw[RIGHT] = yaw[FRONT] + 90;
+    }
+    state++;
+  }
 
   // Cetak value yaw dari robot
   void cetakYaw()
   {
-    Serial.print("Yaw Value: ");
-    Serial.print("F ");
-    Serial.print(yaw[0]); // depan
-    Serial.print(", ");
-    Serial.print("L ");
-    Serial.print(yaw[1]); // kiri
-    Serial.print(", ");
-    Serial.print("R ");
-    Serial.print(yaw[2]); // kanan
-    Serial.print(", ");
-    Serial.print("B ");
-    Serial.println(yaw[3]); // belakang
+    Serial3.print("Yaw Value: ");
+    Serial3.print("F ");
+    Serial3.print(yaw[0]); // depan
+    Serial3.print(", ");
+    Serial3.print("L ");
+    Serial3.print(yaw[1]); // kiri
+    Serial3.print(", ");
+    Serial3.print("R ");
+    Serial3.print(yaw[2]); // kanan
+    Serial3.print(", ");
+    Serial3.print("B ");
+    Serial3.println(yaw[3]); // belakang
   }
 
   int getYaw()
@@ -329,26 +304,22 @@ public:
     return kompas.getCurrent().z;
   }
 
-  // int jarakDepan(){
-  //   return jarak.jarakDepan();
-  // }
+  int jarakDepan(){
+    return jarak.jarakDepan();
+  }
 
-  // int jarakBelakang(){
-  //   return jarak.jarakBelakang();
-  // }
+  int jarakBelakang(){
+    return jarak.jarakBelakang();
+  }
 
-  // int jarakKiri(){
-  //   return jarak.jarakKiri();
-  // }
+  int jarakKiri(){
+    return jarak.jarakKiri();
+  }
 
-  // int jarakKanan(){
-  //   return jarak.jarakKanan();
-  // }
+  int jarakKanan(){
+    return jarak.jarakKanan();
+  }
 
-  // //Untuk mengupdate buffer
-  // void readUltrasonic(){
-  //   jarak.readAllJarak();
-  // }
   bool checkKorban()
   {
     return (kamera.getX() == -1) ? false : true;
@@ -369,9 +340,12 @@ public:
     X = Y = W = H = 0;
     berdiri(tipeLangkah);
     delay(200);
+    
+    capit.turunLengan();
+    capit.bukaCapit();
+    delay(500);
     kamera.getIndex();
-    // capit.turunLengan();
-    // capit.bukaCapit();
+    kamera.test();
     int step = 0;
     int end = 4;
     int arah = KiP;
@@ -417,7 +391,7 @@ public:
 
       W = kamera.getWidth();
       H = kamera.getHeight();
-
+      
       // kamera.kameraPrintLocation();
 
       if (W - H >= targetSizeKorban)
@@ -441,8 +415,9 @@ public:
     }
 
     delay(500);
-    // capit.tutupCapit();
+    capit.tutupCapit();
     berdiri(tipeLangkah);
+    capit.naikLengan();
     // capit.naikLenganDikit();
     for (int i = 0; i < 2; i++)
     {
@@ -504,7 +479,7 @@ public:
 
   void kiri()
   {
-    rotate(KIRI, DEFAULT, 5, 11, this->tipeLangkah, this->speed, this->delayLangkah);
+    rotate(KiP, DEFAULT, 4, 16, this->tipeLangkah, this->speed, this->delayLangkah);
     changeDirToKiri();
     berdiri();
     state++;
@@ -539,7 +514,7 @@ public:
 
   void kanan()
   {
-    rotate(KANAN, DEFAULT, 5, 11, this->tipeLangkah, this->speed, this->delayLangkah);
+    rotate(KaP, DEFAULT, 4, 16, this->tipeLangkah, this->speed, this->delayLangkah);
     changeDirToKanan();
     berdiri();
     state++;
@@ -605,13 +580,13 @@ public:
 
       if (simpanNext < yaw[index] - error + set)
       {
-        rotate(KANAN, height, 1, derajat, tipeLangkah, speed, delayLangkah);
+        rotate(KaP, height, 1, derajat, tipeLangkah, speed, delayLangkah);
         // readUltrasonic();
       }
 
       if (simpanNext > yaw[index] + error + set)
       {
-        rotate(KIRI, height, 1, derajat, tipeLangkah, speed, delayLangkah);
+        rotate(KiP, height, 1, derajat, tipeLangkah, speed, delayLangkah);
         // readUltrasonic();
       }
 
