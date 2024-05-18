@@ -11,12 +11,12 @@ class SensorJarakGroup {
 
   public:
     SensorJarakGroup() :
-      depan(41,01),
+      depan(49,01),
       belakang(35,02),
-      KiD(47,03),
-      KaD(45,04),
-      KiB(49,05),
-      KaB(51,06)
+      KiD(47,03), //Kiri Depan
+      KaD(45,04), //Kanan Depan
+      KiB(41,05), //Kiri Belakang
+      KaB(51,06)  //Kanan Belakang
     {}
     void init(){
       delay(100);

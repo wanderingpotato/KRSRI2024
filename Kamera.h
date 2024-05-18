@@ -147,6 +147,8 @@ public:
             Serial3.print(pixy.ccc.blocks[i].m_width);
             Serial3.print(",HEIGHT : ");
             Serial3.print(pixy.ccc.blocks[i].m_height);
+            Serial3.print(" W - H :");
+            Serial3.print(pixy.ccc.blocks[i].m_width-pixy.ccc.blocks[i].m_height);
           }
         }  
     }

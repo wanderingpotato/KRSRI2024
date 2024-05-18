@@ -52,8 +52,8 @@ using namespace ControlTableItem;
 #define ROTATING 2
 
 //Putar
-#define KaP -1
-#define KiP 1
+#define KaP -1 //Kanan
+#define KiP 1 //Kiri
 
 //Arah robot
 #define FRONT 0
@@ -86,3 +86,10 @@ using namespace ControlTableItem;
 #define DEFAULT 0
 
 #define MANUALMODE 123
+
+// Untuk Deragat Lengan
+#define Atas 90
+#define TNormal 20
+#define TSedang_10 30
+#define TSedang_15 40
+#define TFull 5

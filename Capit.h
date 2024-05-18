@@ -61,8 +61,8 @@ class Capit{
       }
     }
 
-    void turunLengan(){
-      for(int pos = 90 ; pos >= 20 ; pos -= 5){
+    void turunLengan(int deragat){
+      for(int pos = 90 ; pos >= deragat ; pos -= 5){
           lengan.write(pos);
           delay(10);
       }

@@ -31,11 +31,12 @@ public:
   int speed = 300;                 // kecepatan motor
   int delayLangkah = 10;          // delay antar langkah
   bool isHoldingKorban = false;    // Apakah robot sedang memegang korban atau tidak
-  int targetSizeKorban = 73;
+  int targetSizeKorban = 35;
   int kondisiTargetJarakMin[4] = {0, 0, 0, 0}; // kondisi target dari ke-4 jarak, jika 0 abaikan
   int kondisiTargetJarakMax[4] = {0, 0, 0, 0}; // jarak sebenarnya lebih kecil daripada kondisi
   int kondisiTargetRollMin = 0;                // kondisi target dari roll, jika 0 abaikan
   int kondisiTargetRollMax = 0;
+  int DeragatLengan = TNormal;
   int state = 0; // state dari robot, set MANUALMODE jika ingin diatur manual
   /*
    * yaw[0] -> depan
@@ -100,22 +101,24 @@ public:
     kamera.init();
     kompas.init();
     capit.init();
+    
     jarak.init();
     kaki.init();
-    
+    // capit.turunLengan(this->DeragatLengan);
     delay(100);
     kaki.berdiri(tipeLangkah);
-    // while(1){
-    //   kamera.test();
-    // }
-    // for(int i=0;i<10;i++){
-    //  move(MAJU, DEFAULT, this->derajatLangkah, this->tipeLangkah, this->speed, this->delayLangkah);
-    //  rotate(KaP, DEFAULT, 5, 20, this->tipeLangkah, this->speed, this->delayLangkah);
-    //  kepiting(MAJU, DEFAULT, 20, this->tipeLangkah, this->speed, this->delayLangkah);
-    // }
-    // while(1){
-    //   move(MAJU, DEFAULT, this->derajatLangkah, this->tipeLangkah, this->speed, this->delayLangkah);
-    // }
+    // capit.turunLenganFull();
+    // testDebug();
+  }
+
+  void testDebug(){
+    while(1){
+      // kamera.test();
+      jarak.printJarak();
+      //  rotate(KaP, DEFAULT, 5, 20, this->tipeLangkah, this->speed, this->delayLangkah);
+      //  kepiting(MAJU, DEFAULT, 20, this->tipeLangkah, this->speed, this->delayLangkah);
+      //  move(MAJU, DEFAULT, this->derajatLangkah, SEDANG_20, this->speed, 100);
+    }
   }
 
   void initManualMode()
@@ -341,7 +344,7 @@ public:
     berdiri(tipeLangkah);
     delay(200);
     
-    capit.turunLengan();
+    capit.turunLengan(this->DeragatLengan);
     capit.bukaCapit();
     delay(500);
     kamera.getIndex();
@@ -430,7 +433,7 @@ public:
   }
   void letakanKorban()
   {
-    capit.turunLengan();
+    capit.turunLengan(this->DeragatLengan);
     capit.bukaCapit();
     for (int i = 0; i < 2; i++)
     {
