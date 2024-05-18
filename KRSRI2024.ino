@@ -18,7 +18,8 @@ void setup(){
   dxl.begin(57600);
   dxl.setPortProtocolVersion(DXL_PROTOCOL_VERSION);
   KSR2024.init();
-  // KSR2024.state = 4; //
+  // KSR2024.state = 13; //
+  // KSR2024.tipeLangkah=SEDANG_10;
 }
 
 void loop(){
@@ -28,7 +29,8 @@ void loop(){
 
      case 0:{
         KSR2024.checkPosition();
-        // KSR2024.state=4;
+        // delay(500);
+        // KSR2024.state=13;
         break;
      }
 //      //menuju korban
@@ -84,7 +86,7 @@ void loop(){
 //      //maju jalan retak
      case 8:{
         KSR2024.kondisiTargetRollMax = -12;
-        KSR2024.tipeLangkah = SEDANG_15;
+        KSR2024.tipeLangkah = SEDANG_20;
         KSR2024.derajatLangkah = 20;
         KSR2024.delayLangkah = 100;
         KSR2024.error = 12;
@@ -106,62 +108,48 @@ void loop(){
         break; 
      }
 //      //masuk jalan batu
-//      case 10:{
-//         KSR2024.kondisiTargetJarakMax[FRONT] = 120;
-//         KSR2024.tipeLangkah = SEDANG_10;
-//         KSR2024.derajatLangkah = 15;
-//         KSR2024.delayLangkah = 60;
-//         KSR2024.error = 8;
-//         KSR2024.derajatLangkahSetPos = 10;
-//         KSR2024.movingType = MOVING;
-//         KSR2024.movingDirection = MAJU;
-//         break; 
-//      }
+     case 10:{
+        KSR2024.kondisiTargetJarakMax[FRONT] = 195;
+        KSR2024.tipeLangkah = SEDANG_10;
+        KSR2024.derajatLangkah = 20;
+        KSR2024.delayLangkah = 50;
+        KSR2024.error = 8;
+        KSR2024.derajatLangkahSetPos = 10;
+        KSR2024.movingType = MOVING;
+        KSR2024.movingDirection = MAJU;
+        break; 
+     }
 //      //belok kanan hadap safezone
-//      case 11:{
-//         KSR2024.movingType = ROTATING;
-//         KSR2024.movingDirection = KANAN;
-//         break;
-//      }
+     case 11:{
+        KSR2024.movingType = ROTATING;
+        // KSR2024.movingDirection = KANAN;
+        KSR2024.offsetDirection = 45;
+        break;
+     }
 //       //maju sampai aman untuk letakkan korban
-//      case 12:{
-//         if(KSR2024.jarakDepan()<=180){
-//           KSR2024.kondisiTargetJarakMin[FRONT] = 150;
-//           KSR2024.movingType = MOVING;
-//           KSR2024.movingDirection = MUNDUR;
-//         }else{
-//           KSR2024.kondisiTargetJarakMax[FRONT] = 150;
-//           KSR2024.movingType = MOVING;
-//           KSR2024.movingDirection = MAJU;
-//         }
-//         break;
-//      }
-//      case 13:{
-//         KSR2024.offsetDirection = -35;
-//         KSR2024.movingType = ROTATING;
-//         KSR2024.movingDirection = STAY;
-//         break; 
-//      }
 //      //letakkan korban pertama
-//      case 14:{
-//         KSR2024.letakanKorban();
-//         KSR2024.offsetDirection = 0;
-//         KSR2024.error = 5;
-//         KSR2024.derajatLangkahSetPos = 10;
-//         break; 
-//      }
+     case 12:{
+        KSR2024.letakanKorban();
+        KSR2024.offsetDirection = 45;
+        KSR2024.error = 5;
+        KSR2024.derajatLangkahSetPos = 10;
+        break; 
+     }
 //      //miring kanan jika kurang kiri atau mundur aja
-//      case 15: {
-//        if(KSR2024.jarakKiri() >= 110){
-//           KSR2024.offsetDirection = 10;
-//           KSR2024.movingType = ROTATING;
-//           KSR2024.movingDirection = STAY;
-//        }
-//        else{
-//           KSR2024.state = 17;
-//        }
-//        break;
-//      }
+     case 13: {
+       if(KSR2024.jarakKiri() >= 155){
+          KSR2024.movingType = MOVING;
+          KSR2024.movingDirection = Kari;
+       }
+       else{
+          KSR2024.state=14;
+       }
+       break;
+     }
+     case 14:{
+        KSR2024.movingType = MOVING;
+        KSR2024.movingDirection = MUNDUR;
+     }
 //      case 16:{
 //         KSR2024.tipeLangkah = SEDANG_25;
 //         KSR2024.derajatLangkah = 18;

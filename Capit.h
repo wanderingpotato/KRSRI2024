@@ -19,7 +19,7 @@ class Capit{
       delay(10);
       // Bagian atas untuk attach servo ke pin
 
-      lengan.write(90);
+      lengan.write(100);
       capitan.write(0);
       delay(200);
 
@@ -39,7 +39,7 @@ class Capit{
     }
 
     void naikLengan(){ 
-      for(int pos = 0 ; pos <= 90 ; pos += 5){
+      for(int pos = 0 ; pos <= 100 ; pos += 5){
           lengan.write(pos);
           delay(10);
       }
@@ -64,7 +64,7 @@ class Capit{
     void turunLengan(int deragat){
       for(int pos = 90 ; pos >= deragat ; pos -= 5){
           lengan.write(pos);
-          delay(10);
+          delay(50);
       }
       // Prosedur untuk menurunkan lengan secara perlahan dengan kecepatan 5 derajat per 65ms sampai 135 derajat maksimal
     }

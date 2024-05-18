@@ -43,6 +43,8 @@ using namespace ControlTableItem;
 //Movement
 #define MAJU 1
 #define MUNDUR -1
+#define Kasu 2
+#define Kari 3
 
 #define KANAN 1
 #define KIRI -1
@@ -89,7 +91,7 @@ using namespace ControlTableItem;
 
 // Untuk Deragat Lengan
 #define Atas 90
-#define TNormal 20
-#define TSedang_10 30
-#define TSedang_15 40
+#define TNormal 15
+#define TSedang_10 20
+#define TSedang_15 30
 #define TFull 5

@@ -114,9 +114,9 @@ public:
   void testDebug(){
     while(1){
       // kamera.test();
-      jarak.printJarak();
+      // jarak.printJarak();
       //  rotate(KaP, DEFAULT, 5, 20, this->tipeLangkah, this->speed, this->delayLangkah);
-      //  kepiting(MAJU, DEFAULT, 20, this->tipeLangkah, this->speed, this->delayLangkah);
+      //  kepiting(1, DEFAULT, 20, this->tipeLangkah, this->speed, this->delayLangkah);
       //  move(MAJU, DEFAULT, this->derajatLangkah, SEDANG_20, this->speed, 100);
     }
   }
@@ -159,7 +159,12 @@ public:
   {
     move(MUNDUR, DEFAULT, this->derajatLangkah, this->tipeLangkah, this->speed, this->delayLangkah);
   }
-
+  void KKiri(){
+    kepiting(KiP, DEFAULT, this->derajatLangkah, this->tipeLangkah, this->speed, this->delayLangkah);
+  }
+  void KKanan(){
+    kepiting(KaP, DEFAULT, this->derajatLangkah, this->tipeLangkah, this->speed, this->delayLangkah);
+  }
   void move()
   {
     switch (this->movingType)
@@ -168,16 +173,28 @@ public:
     {
       switch (this->movingDirection)
       {
-      case MAJU:
-      {
-        maju();
-        break;
-      }
-      case MUNDUR:
-      {
-        mundur();
-        break;
-      }
+        case MAJU:
+        {
+          maju();
+          break;
+        }
+        case MUNDUR:
+        {
+          mundur();
+          break;
+        }
+        case Kasu:
+        {
+          KKanan();
+          // state++;
+          break;
+        }
+        case Kari:
+        {
+          KKiri();
+          // state++;
+          break;
+        }
       }
       break;
     }
@@ -185,15 +202,15 @@ public:
     {
       switch (this->movingDirection)
       {
-      case KIRI:
-      {
-        kiri();
-        break;
-      }
-      case KANAN:
-      {
-        kanan();
-        break;
+        case KIRI:
+        {
+          kiri();
+          break;
+        }
+        case KANAN:
+        {
+          kanan();
+          break;
       }
       case STAY:
       {
