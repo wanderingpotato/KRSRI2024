@@ -106,15 +106,17 @@ public:
     kaki.init();
     // capit.turunLengan(this->DeragatLengan);
     delay(100);
-    kaki.berdiri(tipeLangkah);
+    // kaki.berdiri(tipeLangkah);
     // capit.turunLenganFull();
     // testDebug();
   }
 
   void testDebug(){
     while(1){
+      kaki.setDepan(DKanan);
+      kompas.printCurrent();
       // kamera.test();
-      // jarak.printJarak();
+      jarak.printJarak();
       //  rotate(KaP, DEFAULT, 5, 20, this->tipeLangkah, this->speed, this->delayLangkah);
       //  kepiting(1, DEFAULT, 20, this->tipeLangkah, this->speed, this->delayLangkah);
       //  move(MAJU, DEFAULT, this->derajatLangkah, SEDANG_20, this->speed, 100);
@@ -164,6 +166,9 @@ public:
   }
   void KKanan(){
     kepiting(KaP, DEFAULT, this->derajatLangkah, this->tipeLangkah, this->speed, this->delayLangkah);
+  }
+  void PindahGroup(int T){
+        kaki.setDepan(T);
   }
   void move()
   {
@@ -252,42 +257,48 @@ public:
      // kalo kiri kosong -> putar kiri
      // kalo belakang kosong -> putar balik dari kiri / kanan sama aja
 
-    if(jarak.jarakBelakang() >= 280){ // Berarti lagi ngadep belakang
+    if(jarak.jarakBelakang() >= 250){ // Berarti lagi ngadep belakang
       yaw[BACK] = getYaw();
 
       yaw[FRONT] = yaw[BACK] + 180;
       yaw[RIGHT] = yaw[BACK] - 90;
       yaw[LEFT] = yaw[BACK] + 90;
+      kaki.berdiri(tipeLangkah);
+      delay(500);
       rotate(KiP, DEFAULT, 5, 11, this->tipeLangkah, this->speed, this->delayLangkah);
       rotate(KiP, DEFAULT, 5, 11, this->tipeLangkah, this->speed, this->delayLangkah);
       setPos();
     }
-    else if(jarak.jarakKiri() >= 280){ // Berarti lagi ngadep kanan
+    else if(jarak.jarakKiri() >= 250){ // Berarti lagi ngadep kanan
       yaw[RIGHT] = getYaw();
 
       yaw[LEFT] = yaw[RIGHT] + 180;
       yaw[FRONT] = yaw[RIGHT] - 90;
       yaw[BACK] = yaw[RIGHT] + 90;
-
+      kaki.berdiri(tipeLangkah);
+      delay(500);
       rotate(KiP, DEFAULT, 5, 11, this->tipeLangkah, this->speed, this->delayLangkah);
       setPos();
     }
-    else if(jarak.jarakKanan() >= 280){ // Berarti lagi ngadep kiri
+    else if(jarak.jarakKanan() >= 250){ // Berarti lagi ngadep kiri
       yaw[LEFT] = getYaw();
 
       yaw[RIGHT] = yaw[LEFT] + 180;
       yaw[BACK] = yaw[LEFT] - 90;
       yaw[FRONT] = yaw[LEFT] + 90;
-
+      kaki.berdiri(tipeLangkah);
+      delay(500);
       rotate(KaP, DEFAULT, 5, 11, this->tipeLangkah, this->speed, this->delayLangkah);
       setPos();
     }
-    else if(jarak.jarakDepan() >= 280){ // Ngadep depan
+    else if(jarak.jarakDepan() >= 250){ // Ngadep depan
       yaw[FRONT] = getYaw();
 
       yaw[BACK] = yaw[FRONT] + 180;
       yaw[LEFT] = yaw[FRONT] - 90;
       yaw[RIGHT] = yaw[FRONT] + 90;
+      kaki.berdiri(tipeLangkah);
+      delay(500);
     }
     state++;
   }
@@ -435,6 +446,112 @@ public:
     }
 
     delay(500);
+    capit.tutupCapit();
+    berdiri(tipeLangkah);
+    capit.naikLengan();
+    // capit.naikLenganDikit();
+    for (int i = 0; i < 2; i++)
+    {
+      move(MUNDUR, height, derajat, tipeLangkah, speed, this->delayLangkah);
+      // readUltrasonic();
+    }
+    delay(50);
+    // capit.naikLenganLanjutan();
+    state++;
+  }
+
+  void getKorban2()
+  {
+    getKorban2(DEFAULT, 10, this->tipeLangkah, this->speed, this->targetSizeKorban);
+    this->isHoldingKorban = true;
+  }
+
+  void getKorban2(int height, float derajat, int tipeLangkah, int speed = 10, int targetSizeKorban = 85)
+  {
+    // USE " DEFAULT " JIKA TIDAK MAU SPECIFY HEIGHT
+    // DEFAULT DERAJAT 10 NORMAL
+    // DEFAULT DERAJAT 20 TINGGI
+
+    int X, Y, W, H;
+    X = Y = W = H = 0;
+    berdiri(tipeLangkah);
+    delay(200);
+    
+    capit.turunLengan(this->DeragatLengan);
+    capit.bukaCapit();
+    delay(500);
+    kamera.getIndex();
+    kamera.test();
+    int step = 0;
+    int end = 4;
+    int arah = KiP;
+    while (kamera.getX() == -1)
+    {
+      if (step == end)
+      {
+        if (end == 4)
+        {
+          step = 8;
+        }
+        // arah = (arah == KiP) ? KaP : KiP;
+      }
+      // rotate(arah, DEFAULT, 1, 7, this->tipeLangkah, this->speed, this->delayLangkah);
+      // readUltrasonic();
+      step++;
+    }
+
+    while (1)
+    {
+      X = kamera.getX();
+      Y = kamera.getY();
+
+      // Serial3.print(X);
+      // Serial3.print(" ");
+      // Serial3.print(Y);
+      // Serial3.println(" ");
+      if (X >= 175)
+      {
+        rotate(KaP, height, 1, 5, tipeLangkah, speed, this->delayLangkah);
+        // readUltrasonic();
+      }
+      else if (X >= 0 && X <= 125)
+      {
+        rotate(KiP, height, 1, 5, tipeLangkah, speed, this->delayLangkah);
+        // readUltrasonic();
+      }
+      else
+      {
+        move(MAJU, height, derajat, tipeLangkah, speed, this->delayLangkah);
+        // readUltrasonic();kzc
+      }
+
+      W = kamera.getWidth();
+      H = kamera.getHeight();
+      
+      // kamera.kameraPrintLocation();
+
+      if (W - H >= targetSizeKorban)
+      {
+        if (state == 4)
+        {
+          break;
+        }
+        int count = 1;
+        int max = 2;
+        while (W - H >= targetSizeKorban && count <= max)
+        {
+          count++;
+          delay(1000);
+        }
+        if (count > max)
+        {
+          break;
+        }
+      }
+    }
+
+    delay(500);
+    berdiri(SEDANG_10);
     capit.tutupCapit();
     berdiri(tipeLangkah);
     capit.naikLengan();

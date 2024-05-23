@@ -59,6 +59,36 @@ class KakiGroup{
       RB.init();
     }
     
+    void setDepan(int tim){
+      switch(tim){
+        case 1:
+          LF.setpos(KIRI);
+          LB.setpos(KANAN);
+          RM.setpos(KIRI);
+          LM.setpos(KANAN);
+          RF.setpos(KIRI);
+          RB.setpos(KANAN);
+          break;
+
+        case 2:
+          RF.setpos(KIRI);
+          LM.setpos(KIRI);
+          RB.setpos(KANAN);
+          RM.setpos(KANAN);
+          LF.setpos(KIRI);
+          LB.setpos(KANAN);
+          break;
+
+        case 0:
+          LF.setpos(KIRI); 
+          LM.setpos(KIRI); 
+          LB.setpos(KIRI); 
+          RB.setpos(KANAN); 
+          RM.setpos(KANAN);
+          RF.setpos(KANAN); 
+          break;
+      }
+    }
     void berdiri(int tipeLangkah){
       // Set kaki ke poin berdiri (standpoint)
       LF.berdiri(this->standPoint[tipeLangkah]);

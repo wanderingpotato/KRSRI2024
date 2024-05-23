@@ -4,6 +4,7 @@
 Robot KSR2024;
 void cekKondisi();
 void setup(){
+    // digitalRead()
     // ax12a.begin(BaudRate, DirectionPin, &Serial3); // inisialisasi AX12A
     Wire.begin();
     Serial3.begin(9600);
@@ -23,7 +24,7 @@ void setup(){
 }
 
 void loop(){
-    
+  // KSR2024.printJarak();
   switch(KSR2024.state){
     //init
 
@@ -35,7 +36,7 @@ void loop(){
      }
 //      //menuju korban
      case 1:{
-        KSR2024.kondisiTargetJarakMin[BACK] = 525;
+        KSR2024.kondisiTargetJarakMin[BACK] = 540;
         KSR2024.movingType = MOVING;
         KSR2024.movingDirection = MAJU;
         break; 
@@ -63,10 +64,10 @@ void loop(){
      }
 //      //mundur menyesuaikan dengan jalan retak
      case 5:{
-        KSR2024.kondisiTargetJarakMax[BACK] = 140;
+        KSR2024.kondisiTargetJarakMax[BACK] = 130;
         KSR2024.movingType = MOVING;
         KSR2024.movingDirection = MUNDUR;
-        KSR2024.derajatLangkah = 8;
+        KSR2024.derajatLangkah = 10;
         break; 
      }
 //      //hadap depan
@@ -109,46 +110,117 @@ void loop(){
      }
 //      //masuk jalan batu
      case 10:{
-        KSR2024.kondisiTargetJarakMax[FRONT] = 195;
-        KSR2024.tipeLangkah = SEDANG_10;
+        KSR2024.kondisiTargetJarakMax[FRONT] = 190;
+        KSR2024.tipeLangkah = SEDANG_15;
         KSR2024.derajatLangkah = 20;
-        KSR2024.delayLangkah = 50;
+        KSR2024.delayLangkah = 100;
         KSR2024.error = 8;
-        KSR2024.derajatLangkahSetPos = 10;
+        KSR2024.derajatLangkahSetPos = 8;
         KSR2024.movingType = MOVING;
         KSR2024.movingDirection = MAJU;
         break; 
      }
 //      //belok kanan hadap safezone
      case 11:{
-        KSR2024.movingType = ROTATING;
-        // KSR2024.movingDirection = KANAN;
-        KSR2024.offsetDirection = 45;
+        // KSR2024.movingType = ROTATING;
+        KSR2024.changeDirToKanan();
+        KSR2024.offsetDirection = -55;
+        KSR2024.state++;
         break;
      }
 //       //maju sampai aman untuk letakkan korban
 //      //letakkan korban pertama
      case 12:{
+        
         KSR2024.letakanKorban();
-        KSR2024.offsetDirection = 45;
+        KSR2024.offsetDirection = 0;
         KSR2024.error = 5;
-        KSR2024.derajatLangkahSetPos = 10;
+        KSR2024.derajatLangkahSetPos = 5;
         break; 
      }
 //      //miring kanan jika kurang kiri atau mundur aja
      case 13: {
-       if(KSR2024.jarakKiri() >= 155){
+      
+      KSR2024.error = 10;
+      KSR2024.derajatLangkahSetPos = 10;
+      KSR2024.derajatLangkah = 15;
+       if(KSR2024.jarakKiri() >= 200){
+          
+          // KSR2024.PindahGroup(DKanan);
           KSR2024.movingType = MOVING;
           KSR2024.movingDirection = Kari;
        }
        else{
-          KSR2024.state=14;
+          KSR2024.state++;
        }
        break;
      }
      case 14:{
+      KSR2024.tipeLangkah = SEDANG_20;
+        // KSR2024.PindahGroup(0);
+        KSR2024.derajatLangkah = 20;
+        KSR2024.kondisiTargetJarakMin[FRONT] = 450;
         KSR2024.movingType = MOVING;
         KSR2024.movingDirection = MUNDUR;
+        break;
+     }
+     case 15:{
+        KSR2024.movingType = ROTATING;
+        KSR2024.movingDirection = KANAN;
+        break;
+     }
+     case 16:{
+      KSR2024.kondisiTargetJarakMin[BACK] = 140;
+      KSR2024.movingType = MOVING;
+      KSR2024.movingDirection = MUNDUR;
+      break;
+     }
+     case 17:{
+        KSR2024.tipeLangkah = SEDANG_20;
+        // KSR2024.getKorban2();
+        KSR2024.state++;
+        break;
+     }
+     case 18:{
+        KSR2024.tipeLangkah = SEDANG_20;
+        KSR2024.kondisiTargetJarakMin[BACK] = 140;
+        KSR2024.movingType = MOVING;
+        KSR2024.movingDirection = MUNDUR;
+        break;
+     }
+     case 19:{
+        KSR2024.movingType = ROTATING;
+        KSR2024.movingDirection = KANAN;
+        break;
+     }
+     case 20:{
+        KSR2024.kondisiTargetJarakMin[BACK] = 500;
+        KSR2024.movingType = MOVING;
+        KSR2024.movingDirection = MAJU;
+        break;
+     }
+     case 21:{
+        //letak
+        KSR2024.state++;
+        break;
+     }
+     case 22:{
+        KSR2024.changeDirToKiri();
+        KSR2024.offsetDirection = -45;
+        KSR2024.state++;
+        break;
+     }
+     case 23:{
+        KSR2024.kondisiTargetJarakMin[FRONT] = 150;
+        KSR2024.movingType = MOVING;
+        KSR2024.movingDirection = MAJU;
+        break;
+     }
+     case 24:{
+        KSR2024.tipeLangkah = NORMAL;
+        KSR2024.offsetDirection = 0;
+        KSR2024.state++;
+        break;
      }
 //      case 16:{
 //         KSR2024.tipeLangkah = SEDANG_25;

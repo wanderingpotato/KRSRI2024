@@ -87,6 +87,10 @@ using namespace ControlTableItem;
 
 #define DEFAULT 0
 
+#define DNormal 0
+#define DKiri 1
+#define DKanan 2
+
 #define MANUALMODE 123
 
 // Untuk Deragat Lengan

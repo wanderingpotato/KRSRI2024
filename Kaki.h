@@ -19,7 +19,9 @@ class Kaki{
       this->grup = grup;
       this->letak = letak;
     }
-
+    void setpos(int pos){
+      this->pos=pos;
+    }
     void langkah(vec3_t pointMaju, vec3_t pointMundur, int speed){
         if(this->grup == GRUP1){
           pointMaju.z*=this->pos;

@@ -64,7 +64,7 @@ class Capit{
     void turunLengan(int deragat){
       for(int pos = 90 ; pos >= deragat ; pos -= 5){
           lengan.write(pos);
-          delay(50);
+          delay(30);
       }
       // Prosedur untuk menurunkan lengan secara perlahan dengan kecepatan 5 derajat per 65ms sampai 135 derajat maksimal
     }
