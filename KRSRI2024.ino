@@ -36,7 +36,7 @@ void loop(){
      }
 //      //menuju korban
      case 1:{
-        KSR2024.kondisiTargetJarakMin[BACK] = 540;
+        KSR2024.kondisiTargetJarakMin[BACK] = 560;
         KSR2024.movingType = MOVING;
         KSR2024.movingDirection = MAJU;
         break; 
@@ -79,7 +79,7 @@ void loop(){
      }
 //      //maju sampai mentok
      case 7:{
-        KSR2024.kondisiTargetJarakMin[BACK] = 580;
+        KSR2024.kondisiTargetJarakMin[BACK] = 590;
         KSR2024.movingType = MOVING;
         KSR2024.movingDirection = MAJU;
         break; 
@@ -124,7 +124,7 @@ void loop(){
      case 11:{
         // KSR2024.movingType = ROTATING;
         KSR2024.changeDirToKanan();
-        KSR2024.offsetDirection = -55;
+        KSR2024.offsetDirection = -50;
         KSR2024.state++;
         break;
      }
@@ -135,28 +135,28 @@ void loop(){
         KSR2024.letakanKorban();
         KSR2024.offsetDirection = 0;
         KSR2024.error = 5;
-        KSR2024.derajatLangkahSetPos = 5;
+        KSR2024.derajatLangkahSetPos = 15;
         break; 
      }
 //      //miring kanan jika kurang kiri atau mundur aja
      case 13: {
       
-      KSR2024.error = 10;
-      KSR2024.derajatLangkahSetPos = 10;
-      KSR2024.derajatLangkah = 15;
-       if(KSR2024.jarakKiri() >= 200){
+        KSR2024.error = 10;
+        KSR2024.derajatLangkahSetPos = 10;
+        KSR2024.derajatLangkah = 15;
+        if(KSR2024.jarakKiri() >= 190){
           
           // KSR2024.PindahGroup(DKanan);
           KSR2024.movingType = MOVING;
           KSR2024.movingDirection = Kari;
-       }
-       else{
+        }
+        else{
           KSR2024.state++;
-       }
-       break;
+        }
+        break;
      }
      case 14:{
-      KSR2024.tipeLangkah = SEDANG_20;
+        KSR2024.tipeLangkah = SEDANG_20;
         // KSR2024.PindahGroup(0);
         KSR2024.derajatLangkah = 20;
         KSR2024.kondisiTargetJarakMin[FRONT] = 450;
@@ -167,12 +167,15 @@ void loop(){
      case 15:{
         KSR2024.movingType = ROTATING;
         KSR2024.movingDirection = KANAN;
+        
         break;
      }
      case 16:{
-      KSR2024.kondisiTargetJarakMin[BACK] = 140;
-      KSR2024.movingType = MOVING;
-      KSR2024.movingDirection = MUNDUR;
+      // KSR2024.kondisiTargetJarakMin[BACK] = 155;
+      // KSR2024.movingType = MOVING;
+      // KSR2024.movingDirection = MUNDUR;
+      KSR2024.state=19;
+      // KSR2024.state++;
       break;
      }
      case 17:{
@@ -182,10 +185,11 @@ void loop(){
         break;
      }
      case 18:{
-        KSR2024.tipeLangkah = SEDANG_20;
-        KSR2024.kondisiTargetJarakMin[BACK] = 140;
-        KSR2024.movingType = MOVING;
-        KSR2024.movingDirection = MUNDUR;
+        // KSR2024.tipeLangkah = SEDANG_20;
+        // KSR2024.kondisiTargetJarakMin[BACK] = 155;
+        // KSR2024.movingType = MOVING;
+        // KSR2024.movingDirection = MUNDUR;
+        KSR2024.state++;
         break;
      }
      case 19:{
@@ -194,9 +198,10 @@ void loop(){
         break;
      }
      case 20:{
-        KSR2024.kondisiTargetJarakMin[BACK] = 500;
-        KSR2024.movingType = MOVING;
-        KSR2024.movingDirection = MAJU;
+        // KSR2024.kondisiTargetJarakMin[BACK] = 500;
+        // KSR2024.movingType = MOVING;
+        // KSR2024.movingDirection = MAJU;
+        KSR2024.state=22;
         break;
      }
      case 21:{
@@ -206,20 +211,78 @@ void loop(){
      }
      case 22:{
         KSR2024.changeDirToKiri();
-        KSR2024.offsetDirection = -45;
+        KSR2024.offsetDirection = 50;
         KSR2024.state++;
         break;
      }
      case 23:{
-        KSR2024.kondisiTargetJarakMin[FRONT] = 150;
+        KSR2024.kondisiTargetJarakMin[BACK] = 670;
         KSR2024.movingType = MOVING;
         KSR2024.movingDirection = MAJU;
         break;
      }
      case 24:{
-        KSR2024.tipeLangkah = NORMAL;
+        
         KSR2024.offsetDirection = 0;
         KSR2024.state++;
+        break;
+     }
+     case 25:{
+        KSR2024.kondisiTargetJarakMin[BACK] = 670;
+        KSR2024.movingType = MOVING;
+        KSR2024.movingDirection = MAJU;
+        break;
+     }
+     case 26:{
+        KSR2024.tipeLangkah = NORMAL;
+        KSR2024.kondisiTargetJarakMin[RIGHT] = 350;
+        KSR2024.movingType = MOVING;
+        KSR2024.movingDirection = Kari;
+        break;
+     }
+     case 27:{
+        KSR2024.kondisiTargetJarakMin[BACK] = 600;
+        KSR2024.tipeLangkah = SEDANG_20;
+        KSR2024.derajatLangkah = 20;
+        KSR2024.delayLangkah = 100;
+        KSR2024.error = 12;
+        KSR2024.derajatLangkahSetPos = 12;
+        KSR2024.movingType = MOVING;
+        KSR2024.movingDirection = MAJU;
+        break;
+     }
+     case 28:{
+        KSR2024.kondisiTargetJarakMax[FRONT] = 225;
+        KSR2024.tipeLangkah = SEDANG_20;
+        KSR2024.derajatLangkah = 20;
+        KSR2024.delayLangkah = 100;
+        KSR2024.error = 12;
+        KSR2024.derajatLangkahSetPos = 12;
+        KSR2024.movingType = MOVING;
+        KSR2024.movingDirection = MAJU;
+        break;
+     }
+     case 29:{
+        KSR2024.tipeLangkah = SEDANG_15;
+        KSR2024.offsetDirection = 45;
+        KSR2024.state++;
+        break;
+     }
+     case 30:{
+        KSR2024.kondisiTargetJarakMin[BACK] = 500;
+        KSR2024.movingType = MOVING;
+        KSR2024.movingDirection = MAJU;
+        break;
+     }
+     case 31:{
+        KSR2024.offsetDirection = 0;
+        KSR2024.state++;
+        break;
+     }
+     case 32:{
+        KSR2024.kondisiTargetJarakMin[BACK] = 450;
+        KSR2024.movingType = MOVING;
+        KSR2024.movingDirection = MAJU;
         break;
      }
 //      case 16:{
