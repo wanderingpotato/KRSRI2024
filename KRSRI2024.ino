@@ -87,6 +87,7 @@ void loop(){
     }
     //maju jalan retak
     case 8:{
+        KSR2024.offsetDirection = 15;
         KSR2024.kondisiTargetRollMax = -12;
         KSR2024.tipeLangkah = SEDANG_20;
         KSR2024.derajatLangkah = 20;
@@ -99,6 +100,7 @@ void loop(){
     }
     //masuk jalan miring
     case 9:{
+        KSR2024.offsetDirection = 10;
         KSR2024.kondisiTargetRollMin = -3;
         KSR2024.tipeLangkah = SEDANG_15;
         KSR2024.derajatLangkah = 20;
@@ -111,6 +113,7 @@ void loop(){
     }
     //masuk jalan batu
     case 10:{
+        KSR2024.offsetDirection = 0;
         KSR2024.kondisiTargetJarakMax[FRONT] = 190;
         KSR2024.tipeLangkah = SEDANG_15;
         KSR2024.derajatLangkah = 20;
@@ -155,7 +158,7 @@ void loop(){
     case 14:{
         KSR2024.tipeLangkah = SEDANG_20;
         KSR2024.derajatLangkah = 20;
-        KSR2024.kondisiTargetJarakMin[FRONT] = 550;
+        KSR2024.kondisiTargetJarakMin[FRONT] = 525;
         KSR2024.movingType = MOVING;
         KSR2024.movingDirection = MUNDUR;
         break;
@@ -219,7 +222,7 @@ void loop(){
     }
     //Maju Keluar Kelereng
     case 23:{
-        KSR2024.kondisiTargetJarakMin[BACK] = 700;
+        KSR2024.kondisiTargetJarakMin[BACK] = 680;
         KSR2024.movingType = MOVING;
         KSR2024.movingDirection = MAJU;
         break;
@@ -234,27 +237,37 @@ void loop(){
     }
     //Maju Sampe Mentok
     case 25:{
-        KSR2024.error = 10;
-        KSR2024.derajatLangkahSetPos = 10;
-        KSR2024.kondisiTargetJarakMax[FRONT] = 150;
+        KSR2024.error = 14;
+        KSR2024.derajatLangkahSetPos = 14;
+        KSR2024.kondisiTargetJarakMin[BACK] = 665;
         KSR2024.movingType = MOVING;
         KSR2024.movingDirection = MAJU;
         break;
     }
     //Jalan Nyamping Sampe Mentok
+    // case 26:{
+    //     KSR2024.offsetDirection = -30;
+    //     KSR2024.kondisiTargetJarakMin[BACK] = 650;
+    //     KSR2024.error = 12;
+    //     KSR2024.derajatLangkahSetPos = 12;
+    //     KSR2024.movingType = MOVING;
+    //     KSR2024.movingDirection = MAJU;
+    //     break;
+    // }
     case 26:{
-        KSR2024.offsetDirection = -30;
-        KSR2024.kondisiTargetJarakMin[BACK] = 650;
-        KSR2024.error = 12;
-        KSR2024.derajatLangkahSetPos = 12;
+        KSR2024.delayLangkah = 50;
+        KSR2024.derajatLangkah = 10;
+        KSR2024.tipeLangkah = NORMAL;
+        KSR2024.kondisiTargetJarakMax[LEFT] = 225;
         KSR2024.movingType = MOVING;
-        KSR2024.movingDirection = MAJU;
+        KSR2024.movingDirection = Kari;
         break;
     }
     //Masuk Retak 2
     case 27:{
-        KSR2024.offsetDirection = 0;
-        KSR2024.kondisiTargetJarakMin[BACK] = 500;
+        KSR2024.tipeLangkah = SEDANG_20;
+        KSR2024.offsetDirection = 18;
+        KSR2024.kondisiTargetJarakMin[BACK] = 1000;
         KSR2024.derajatLangkah = 20;
         KSR2024.delayLangkah = 100;
         KSR2024.movingType = MOVING;
@@ -263,22 +276,22 @@ void loop(){
     }
     //Masih Di dalam Retak 2
     case 28:{
-        KSR2024.kondisiTargetJarakMax[FRONT] = 225;
-        KSR2024.tipeLangkah = SEDANG_20;
+        // KSR2024.kondisiTargetJarakMax[FRONT] = 225;
+        KSR2024.offsetDirection = 45;
         KSR2024.movingType = MOVING;
         KSR2024.movingDirection = MAJU;
         break;
     }
     //Ngarah Nyamping
     case 29:{
-        KSR2024.tipeLangkah = SEDANG_15;
+        // KSR2024.tipeLangkah = SEDANG_15;
         KSR2024.offsetDirection = 45;
         KSR2024.state++;
         break;
     }
     //Maju Sampe Selesai
     case 30:{
-        KSR2024.kondisiTargetJarakMin[BACK] = 500;
+        KSR2024.kondisiTargetJarakMin[BACK] = 650;
         KSR2024.movingType = MOVING;
         KSR2024.movingDirection = MAJU;
         break;
@@ -291,17 +304,17 @@ void loop(){
     }
     //Maju Sampe Keluar 
     case 32:{
-        KSR2024.kondisiTargetJarakMin[BACK] = 450;
+        KSR2024.kondisiTargetJarakMin[BACK] = 600;
         KSR2024.movingType = MOVING;
         KSR2024.movingDirection = MAJU;
         break;
     }
-//      //Mode Manual
-//      case MANUALMODE:{
-//         KSR2024.initManualMode();
-//         manualMod();
-//         break;
-//      }
+     //Mode Manual
+    //  case MANUALMODE:{
+    //     KSR2024.initManualMode();
+    //     manualMod();
+    //     break;
+    //  }
   }
   //Print kondisi robot, dikomen jika sudah tidak perlu debuging
   //  KSR2024.printCurrentYPR();

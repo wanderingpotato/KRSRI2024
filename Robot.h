@@ -375,26 +375,27 @@ public:
     capit.turunLengan(this->DeragatLengan);
     capit.bukaCapit();
     delay(500);
-    kamera.getIndex();
-    kamera.test();
+    
+    // kamera.test();
     int step = 0;
     int end = 4;
-    int arah = KiP;
-    while (kamera.getX() == -1)
+    int arah = KaP;
+    while (kamera.getNumBlok() < 3)
     {
-      if (step == end)
+      if (step >= end)
       {
         if (end == 4)
         {
-          step = 8;
+          end = 8;
         }
-        // arah = (arah == KiP) ? KaP : KiP;
+        step=0;
+        arah = (arah == KiP) ? KaP : KiP;
       }
-      // rotate(arah, DEFAULT, 1, 7, this->tipeLangkah, this->speed, this->delayLangkah);
+      rotate(arah, DEFAULT, 1, 5, this->tipeLangkah, this->speed, this->delayLangkah);
       // readUltrasonic();
       step++;
     }
-
+    kamera.getIndex();
     while (1)
     {
       X = kamera.getX();

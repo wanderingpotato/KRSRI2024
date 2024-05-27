@@ -109,7 +109,11 @@ public:
             }
         }
     }
+    int getNumBlok(){
+      pixy.ccc.getBlocks();
+      return pixy.ccc.numBlocks;
 
+    }
     void kameraPrintLocation()
     {
         Serial3.print("X : ");
