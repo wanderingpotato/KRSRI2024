@@ -16,7 +16,7 @@ class SensorJarakGroup {
       KiD(47,03), //Kiri Depan
       KaD(41,04), //Kanan Depan //
       KiB(45,05), //Kiri Belakang //
-      KaB(51,06)  //Kanan Belakang
+      KaB(30,06)  //Kanan Belakang
     {}
     void init(){
       delay(100);

@@ -37,7 +37,7 @@ public:
   int kondisiTargetRollMin = 0;                // kondisi target dari roll, jika 0 abaikan
   int kondisiTargetRollMax = 0;
   int DeragatLengan = TNormal;
-  int state = 0; // state dari robot, set MANUALMODE jika ingin diatur manual
+  int state = -1; // state dari robot, set MANUALMODE jika ingin diatur manual
   /*
    * yaw[0] -> depan
    * yaw[1] -> kiri
@@ -100,16 +100,18 @@ public:
     jarak = SensorJarakGroup();
     kamera.init();
     kompas.init();
-    capit.init();
+    
     
     jarak.init();
     kaki.init();
+    capit.init();
     // capit.turunLengan(this->DeragatLengan);
     delay(100);
     // kaki.berdiri(tipeLangkah);
     // capit.turunLenganFull();
     // testDebug();
   }
+
 
   void testDebug(){
     while(1){

@@ -33,7 +33,7 @@ class Capit{
     }
 
     void bukaCapit(){
-      capitan.write(60);
+      capitan.write(65);
       delay(200);
       // Membuka Capit dengan sudut 60 derajat
     }

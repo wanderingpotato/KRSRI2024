@@ -7,6 +7,7 @@ void setup(){
     // digitalRead()
     Wire.begin();
     Serial3.begin(9600);
+    pinMode(10, INPUT);
     // Serial.begin(9600);
     // Serial.println("test");
     // KSR2024.init();
@@ -18,13 +19,19 @@ void setup(){
   dxl.begin(57600);
   dxl.setPortProtocolVersion(DXL_PROTOCOL_VERSION);
   KSR2024.init();
-  
 }
 
 void loop(){
   switch(KSR2024.state){
     //init
+    case -1 : {
+      while(!digitalRead(10)){
 
+      }
+      if(digitalRead(10)){
+        KSR2024.state++;
+      }
+    }
     case 0:{
         // KSR2024.initManualMode();
         // KSR2024.delayLangkah = 100;
@@ -51,7 +58,7 @@ void loop(){
     }
     //mundur utk meluruskan
     case 3:{
-        KSR2024.kondisiTargetJarakMax[BACK] = 130;
+        KSR2024.kondisiTargetJarakMax[BACK] = 100;
         KSR2024.movingType = MOVING;
         KSR2024.movingDirection = MUNDUR;
         KSR2024.derajatLangkah = 10;
@@ -222,7 +229,7 @@ void loop(){
     }
     //Maju Keluar Kelereng
     case 23:{
-        KSR2024.kondisiTargetJarakMin[BACK] = 680;
+        KSR2024.kondisiTargetJarakMin[BACK] = 700;// from 625 to 700
         KSR2024.movingType = MOVING;
         KSR2024.movingDirection = MAJU;
         break;
@@ -237,9 +244,9 @@ void loop(){
     }
     //Maju Sampe Mentok
     case 25:{
-        KSR2024.error = 14;
-        KSR2024.derajatLangkahSetPos = 14;
-        KSR2024.kondisiTargetJarakMin[BACK] = 665;
+        KSR2024.error = 10; //from 14 to 10
+        KSR2024.derajatLangkahSetPos = 10; //from 14 to 10
+        KSR2024.kondisiTargetJarakMin[BACK] = 680;
         KSR2024.movingType = MOVING;
         KSR2024.movingDirection = MAJU;
         break;
@@ -258,7 +265,7 @@ void loop(){
         KSR2024.delayLangkah = 50;
         KSR2024.derajatLangkah = 10;
         KSR2024.tipeLangkah = NORMAL;
-        KSR2024.kondisiTargetJarakMax[LEFT] = 225;
+        KSR2024.kondisiTargetJarakMax[LEFT] = 225; 
         KSR2024.movingType = MOVING;
         KSR2024.movingDirection = Kari;
         break;
@@ -266,18 +273,21 @@ void loop(){
     //Masuk Retak 2
     case 27:{
         KSR2024.tipeLangkah = SEDANG_20;
-        KSR2024.offsetDirection = 18;
-        KSR2024.kondisiTargetJarakMin[BACK] = 1000;
+        KSR2024.offsetDirection = 18; // from 18 to 15
+        // KSR2024.kondisiTargetJarakMin[BACK] = 1000;
         KSR2024.derajatLangkah = 20;
         KSR2024.delayLangkah = 100;
         KSR2024.movingType = MOVING;
         KSR2024.movingDirection = MAJU;
+        if(KSR2024.jarakDepan() > 200 && KSR2024.jarakDepan() < 500){
+          KSR2024.state++;
+        }
         break;
     }
     //Masih Di dalam Retak 2
     case 28:{
         // KSR2024.kondisiTargetJarakMax[FRONT] = 225;
-        KSR2024.offsetDirection = 45;
+        KSR2024.offsetDirection = 38; // from 35 to 38
         KSR2024.movingType = MOVING;
         KSR2024.movingDirection = MAJU;
         break;
